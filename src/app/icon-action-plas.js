@@ -1,0 +1,116 @@
+"use client";
+import { useMemo } from "react";
+import Image from "next/image";
+import Arrow from "./arrow";
+import PropTypes from "prop-types";
+
+const getIconActionPlasStyle = (styleKey) => {
+  switch (styleKey) {
+    case "outline-Default-medium":
+      return "[&]:border-color-primary-300 [&]:border-solid [&]:border-[1px] [&]:bg-color-gray-0";
+    case "primary-Default-small":
+      return "[&]:bg-color-primary-400 [&]:rounded-[999999px]";
+    case "outline-2-Default-small":
+      return "[&]:border-color-gray-400 [&]:border-solid [&]:border-[1px] [&]:bg-color-gray-0 [&]:rounded-[999999px]";
+  }
+};
+const getPlasIconStyle = (styleKey) => {
+  switch (styleKey) {
+    case "primary-Default-small":
+    case "outline-2-Default-small":
+      return "[&]:shrink-0";
+  }
+};
+const getText86Style = (styleKey) => {
+  switch (styleKey) {
+    case "outline-Default-medium":
+      return "[&]:text-color-primary-400"; // 오타 수정: 4001 -> 400
+    case "primary-Default-small":
+      return "[&]:shrink-0";
+    case "outline-2-Default-small":
+      return "[&]:text-color-gray-600 [&]:shrink-0";
+  }
+};
+
+const IconActionPlas = ({
+  className = "",
+  variant = "primary",
+  variant2 = "Default",
+  variant3 = "medium",
+  prop,
+  endIcon = false,
+  startIcon = false,
+  iconActionPlasHeight,
+  iconActionPlasFlex,
+  variant1 = "lift",
+  showArrow,
+  arrowHeight,
+  arrowWidth,
+}) => {
+  const variantKey = [variant, variant2, variant3].join("-");
+
+  const iconActionPlasStyle = useMemo(() => {
+    return {
+      height: iconActionPlasHeight,
+      flex: iconActionPlasFlex,
+    };
+  }, [iconActionPlasHeight, iconActionPlasFlex]);
+
+  return (
+    <button
+      className={`cursor-pointer [border:none] py-[0rem] px-[1.5rem] bg-color-primary-300 h-[3rem] flex-1 rounded-md flex items-center justify-center box-border gap-[0.5rem] ${getIconActionPlasStyle(
+        variantKey
+      )} ${className}`}
+      style={iconActionPlasStyle}
+    >
+      {!!startIcon && (
+        <Image
+          className={`h-[1.5rem] w-[1.5rem] relative ${getPlasIconStyle(
+            variantKey
+          )}`}
+          width={24}
+          height={24}
+          sizes="100vw"
+          alt=""
+          src="/icon-action-plas.svg"
+        />
+      )}
+      <div
+        className={`relative text-[1rem] leading-[150%] font-semibold font-[Pretendard] text-color-gray-0 text-left ${getText86Style(
+          variantKey
+        )}`}
+      >
+        {prop}
+      </div>
+      <Arrow
+        variant={variant1}
+        vector="/Vector1.svg"
+        showArrow={showArrow}
+        arrowHeight={arrowHeight}
+        arrowWidth={arrowWidth}
+      />
+    </button>
+  );
+};
+
+IconActionPlas.propTypes = {
+  className: PropTypes.string,
+  prop: PropTypes.string,
+  endIcon: PropTypes.bool,
+  startIcon: PropTypes.bool,
+  variant1: PropTypes.any,
+  showArrow: PropTypes.bool,
+  arrowHeight: PropTypes.any,
+  arrowWidth: PropTypes.any,
+
+  /** Variant props */
+  variant: PropTypes.string,
+  variant2: PropTypes.string,
+  variant3: PropTypes.string,
+
+  /** Style props */
+  iconActionPlasHeight: PropTypes.string,
+  iconActionPlasFlex: PropTypes.string,
+};
+
+export default IconActionPlas;
