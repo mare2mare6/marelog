@@ -1,17 +1,23 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
+
+// 💡 Lottie 플레이어를 클라이언트 사이드에서만 안전하게 로드합니다.
+const DotLottiePlayer = dynamic(
+  () => import('@dotlottie/react-player').then((mod) => mod.DotLottiePlayer),
+  { ssr: false }
+);
 
 export default function Home() {
-  // 상태 관리: 눈 깜빡임, 입 벌림, 눈동자 위치, 코/눈썹 위치
   const [isBlinking, setIsBlinking] = useState(false);
   const [isMouthOpen, setIsMouthOpen] = useState(false);
   const [eyeOffset, setEyeOffset] = useState({ x: 0, y: 0 });
-  const [faceOffset, setFaceOffset] = useState({ x: 0, y: 0 }); // ★ 코/눈썹 전용 좌표 추가
+  const [faceOffset, setFaceOffset] = useState({ x: 0, y: 0 }); 
   
   const containerRef = useRef(null);
 
-  // 1. 1.5초마다 눈 깜빡이는 애니메이션 (150ms 동안 감았다가 뜸)
+  // 1. 1.5초마다 눈 깜빡이는 애니메이션
   useEffect(() => {
     const blinkInterval = setInterval(() => {
       setIsBlinking(true);
@@ -23,7 +29,7 @@ export default function Home() {
     return () => clearInterval(blinkInterval);
   }, []);
 
-  // 2. 마우스 움직임에 따라 눈동자와 코/눈썹 위치를 다르게 계산
+  // 2. 마우스 움직임에 따라 눈동자와 코/눈썹 위치 계산
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
 
@@ -39,13 +45,11 @@ export default function Home() {
       setEyeOffset({ x: 0, y: 0 });
       setFaceOffset({ x: 0, y: 0 });
     } else {
-      // 👁️ 눈 (더 많이 움직이도록 maxMove와 곱하는 수치를 높임!)
       const maxEyeMove = 4; 
       const eyeX = (deltaX / distance) * Math.min(maxEyeMove, distance * 0.035);
       const eyeY = (deltaY / distance) * Math.min(maxEyeMove, distance * 0.035);
       setEyeOffset({ x: eyeX, y: eyeY });
 
-      // 👃 코와 눈썹 (슬쩍만 움직이도록 무빙 범위를 제한!)
       const maxFaceMove = 2; 
       const faceX = (deltaX / distance) * Math.min(maxFaceMove, distance * 0.01);
       const faceY = (deltaY / distance) * Math.min(maxFaceMove, distance * 0.01);
@@ -53,13 +57,11 @@ export default function Home() {
     }
   };
 
-  // 마우스가 화면을 벗어나면 모든 파츠를 정중앙으로
   const handleMouseLeaveContainer = () => {
     setEyeOffset({ x: 0, y: 0 });
     setFaceOffset({ x: 0, y: 0 });
   };
 
-  // 텍스트에 마우스가 호버되면 입을 벌림
   const handleTextHover = (open) => {
     setIsMouthOpen(open);
   };
@@ -72,9 +74,10 @@ export default function Home() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeaveContainer}
-      className="flex min-h-screen flex-col items-center justify-center bg-slate-900 text-white select-none overflow-hidden"
+      className="flex min-h-screen flex-col items-center justify-between bg-slate-900 text-white select-none py-16 overflow-y-auto"
     >
-      <div className="max-w-4xl w-full grid grid-cols-3 items-center justify-items-center gap-8 px-4">
+      {/* ---------------- [상단 영역: 예전 완벽한 이미지 강아지 인터랙션 화면] ---------------- */}
+      <div className="max-w-4xl w-full grid grid-cols-3 items-center justify-items-center gap-8 px-4 mt-8">
         
         {/* [왼쪽 메뉴] */}
         <div className="flex flex-col gap-12 w-full text-right">
@@ -93,14 +96,14 @@ export default function Home() {
         {/* [중앙 강아지 캐릭터 공간] */}
         <div className="relative w-64 h-64 flex items-center justify-center bg-slate-800 rounded-full border border-slate-700 shadow-2xl overflow-hidden">
           
-          {/* 1. 몸 & 얼굴 베이스 레이어 (가만히 있음) */}
+          {/* 1. 몸 & 얼굴 베이스 레이어 */}
           <img 
             src="/images/main_dog/body.png" 
             alt="강아지 몸" 
             className="absolute top-0 left-0 w-full h-full object-contain" 
           />
 
-          {/* 2. 코 & 눈썹 레이어 (★ 새로 추가됨! 조금만 부드럽게 움직임) */}
+          {/* 2. 코 & 눈썹 레이어 */}
           <img 
             src="/images/main_dog/nose.png" 
             alt="코와 눈썹" 
@@ -111,7 +114,7 @@ export default function Home() {
             }}
           />
 
-          {/* 3. 눈 레이어 (많이 움직임 + 감았을 때도 위치 연동) */}
+          {/* 3. 눈 레이어 (깜빡임 + 위치 연동) */}
           {isBlinking ? (
             <img 
               src="/images/main_dog/eye_close.png" 
@@ -133,7 +136,7 @@ export default function Home() {
             />
           )}
 
-          {/* 4. 입 레이어 (Hover 상태에 따라 스위칭, 고정) */}
+          {/* 4. 입 레이어 */}
           <img 
             src={isMouthOpen ? "/images/main_dog/mouse_open.png" : "/images/main_dog/mouse_close.png"} 
             alt="강아지 입" 
@@ -158,9 +161,31 @@ export default function Home() {
 
       </div>
 
-      <p className="mt-12 text-sm text-slate-500 animate-pulse">
-        메뉴에 마우스를 올리거나 화면 안에서 움직여 보세요!
-      </p>
+      {/* ---------------- [하단 영역: 에펙 Lottie 제이손 파일 단독 프리뷰 공간] ---------------- */}
+      <div className="flex flex-col items-center gap-4 border-t border-dashed border-slate-700 pt-12 mt-16 w-full max-w-xl">
+        <span className="text-xs font-semibold tracking-widest text-teal-400 uppercase bg-teal-950/50 px-3 py-1 rounded-full border border-teal-800">
+          👀 Lottie JSON Live Preview (하단 테스트용)
+        </span>
+        
+        <div className="w-64 h-64 bg-slate-950 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden flex items-center justify-center">
+          {DotLottiePlayer && (
+            <DotLottiePlayer
+              src="/lottieData.json" 
+              autoplay
+              loop
+              style={{ width: '100%', height: '100%' }}
+              // 💡 Lottie JSON 파일 자체에서 u: "images/" 로 경로를 맞췄으므로
+              // 골칫거리였던 rendererSettings는 깔끔하게 지웠습니다!
+            />
+          )}
+        </div>
+        
+        <p className="text-xs text-slate-500 text-center px-4">
+          위에서는 예전 강아지가 깜빡거리며 정상 작동하고,<br/>
+          아래 상자에서는 꼬인 경로를 맞춰준 에펙 애니메이션이 렌더링됩니다!
+        </p>
+      </div>
+
     </div>
   );
 }
