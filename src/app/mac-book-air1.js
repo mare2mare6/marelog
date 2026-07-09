@@ -214,7 +214,6 @@ const MacBookAir1 = () => {
       <MainContentArea />
       <main className="self-stretch flex items-start pt-[0rem] px-[0rem] pb-[3.693rem] box-border max-w-full shrink-0 text-left text-[3rem] text-color-gray-0 font-[Pretendard] mq750:pb-[1.25rem] mq750:box-border mq1225:pb-[1.563rem] mq1225:box-border">
         <div className="flex-1 flex items-start relative isolate max-w-full">
-          {/* 문법 오류 수정: !!m-[0 important] -> !m-0 */}
           <h2 className="!m-0 w-[7.813rem] absolute top-[19.188rem] left-[10.438rem] text-[length:inherit] leading-[120%] font-semibold font-[inherit] inline-block min-w-[7.813rem] whitespace-nowrap mq450:text-[1.813rem] mq450:leading-[2.188rem] mq750:text-[2.375rem] mq750:leading-[2.875rem]">
             이미지
           </h2>
@@ -333,7 +332,8 @@ const MacBookAir1 = () => {
                         <h1 className="m-0 relative text-[length:inherit] leading-[120%] font-semibold font-[inherit] inline-block max-w-full mq450:text-[2.375rem] mq450:leading-[2.875rem] mq750:text-[3.188rem] mq750:leading-[3.813rem]">
                           che ha-eun
                         </h1>
-                        <button className="cursor-pointer [border:none] py-[1.25rem] px-[0rem] bg-[transparent] flex items-center gap-[0.25rem]">
+                        {/* ⚠️ 에러 해결: <button>을 <div role="button">으로 수정하여 자식 컴포넌트인 <Arrow /> 내부의 <button>과 충돌하지 않도록 방지 */}
+                        <div role="button" className="cursor-pointer py-[1.25rem] px-[0rem] bg-[transparent] flex items-center gap-[0.25rem]">
                           <div className="relative text-[1.125rem] leading-[150%] font-[Pretendard] text-color-gray-500 text-left">
                             이력서 보기
                           </div>
@@ -344,7 +344,7 @@ const MacBookAir1 = () => {
                             arrowHeight="1.5rem"
                             arrowWidth="1.5rem"
                           />
-                        </button>
+                        </div>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[0.75rem] text-[1.25rem]">
                         <b className="self-stretch relative leading-[120%] mq450:text-[1rem] mq450:leading-[1.188rem]">
@@ -371,7 +371,7 @@ const MacBookAir1 = () => {
                           <span className="font-semibold leading-[150%]">
                             기획부터 디테일한 UX/UI 디자인까지
                           </span>
-                          <span className="leading-[150%]">{` 탄탄하게 소화해 왔습니다. 이에 그치지 않고 캐릭터 디자인과 일러스트레이션 역량까지 겸비하여 프로덕트에 고유한 브랜드 감성을 더할 수 있는 올라운더입니다. 최신 AI 툴을 활용해 린(Lean)하게 시안을 테스트하며 의사결정 속도를 높이고, `}</span>
+                          <span className="leading-[150%]">{` 탄탄하게 소화해 왔습니다. 이에 그치지 않고 캐릭터 디자인과 일러스트레이션 역량까지 겸비하여 프로덕트에 고유한 브랜드 감성을 더할 수 있는 올라운더입니다. 최신 AI 툴을 활용해 린(Lean)하게 시안을 테스트하며 의사결정 속도를 높이지 않고, `}</span>
                           <span className="font-semibold leading-[150%]">
                             끊임없이 배우는 자세로 사용자와 팀 모두에게 편안함을
                             주는 디자이너가 되겠습니다.

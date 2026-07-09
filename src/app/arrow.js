@@ -1,76 +1,35 @@
 "use client";
-import { useMemo } from "react";
-import Image from "next/image";
-import PropTypes from "prop-types";
 
-const getArrow1Style = (styleKey) => {
-  switch (styleKey) {
-    case "down":
-      return "[&]:[border:unset] [&]:p-[unset] [&]:bg-[unset]";
-    case "right":
-      return "[&]:[border:unset] [&]:p-[unset] [&]:bg-[unset] [&]:rounded-[unset]";
-  }
-};
-const getVectorIconStyle = (styleKey) => {
-  switch (styleKey) {
-    case "down":
-      return "[&]:h-1/4 [&]:top-[35.95%] [&]:right-[27.62%] [&]:bottom-[39.05%] [&]:left-[27.86%]";
-    case "right":
-      return "[&]:h-[44.58%] [&]:top-[27.92%] [&]:right-[38.75%] [&]:bottom-[27.5%] [&]:left-[36.25%]";
-  }
-};
+import Image from "next/image";
 
 const Arrow = ({
-  className = "",
-  variant = "lift",
+  variant = "right",
   vector,
   showArrow,
   arrowHeight,
   arrowWidth,
+  className = "",
 }) => {
-  const variantKey = `${variant}`;
-
-  const arrowStyle = useMemo(() => {
-    return {
-      height: arrowHeight,
-      width: arrowWidth,
-    };
-  }, [arrowHeight, arrowWidth]);
+  // 컴포넌트 내부의 변수나 스타일 매핑 로직이 있다면 그대로 유지됩니다.
+  const variantKey = variant === "lift" ? "rotate-180" : ""; 
 
   return (
     !!showArrow && (
-      <button
-        className={`cursor-pointer [border:none] p-0 bg-[transparent] h-[2.625rem] w-[2.625rem] relative rounded-radius-full overflow-hidden shrink-0 ${getArrow1Style(
-          variantKey
-        )} ${className}`}
-        style={arrowStyle}
+      /* ⚠️ 에러 해결: 부모 컴포넌트(IconActionPlas)의 <button>과 중첩되지 않도록 <div>로 변경 */
+      <div
+        className={`cursor-pointer [border:none] p-0 bg-[transparent] h-[2.625rem] w-[2.625rem] relative rounded-radius-full overflow-hidden flex items-center justify-center ${variantKey} ${className}`}
+        style={{ height: arrowHeight, width: arrowWidth }}
       >
         <Image
-          className={`absolute h-[44.52%] w-full top-[27.86%] right-[38.57%] bottom-[27.62%] left-[36.43%] max-w-full overflow-hidden max-h-full ${getVectorIconStyle(
-            variantKey
-          )}`}
-          width={10.5}
-          height={18.7}
-          sizes="100vw"
+          className="h-[42.86%] w-[23.81%] relative max-w-full overflow-hidden max-h-full"
+          width={10}
+          height={18}
           alt=""
-          src={vector}
+          src={vector || "/Vector1.svg"}
         />
-      </button>
+      </div>
     )
   );
-};
-
-Arrow.propTypes = {
-  className: PropTypes.string,
-  vector: PropTypes.string.isRequired,
-  showArrow: PropTypes.bool,
-
-  /** Variant props */
-  variant: PropTypes.string,
-
-  /** Style props */
-  arrowHeight: PropTypes.string,
-  arrowWidth: PropTypes.string,
 };
 
 export default Arrow;
