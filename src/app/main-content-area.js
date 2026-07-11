@@ -8,13 +8,20 @@ import PropTypes from "prop-types";
 const MainContentArea = ({ className = "" }) => {
   return (
     <section
-      className={`self-stretch flex flex-col items-start max-w-full shrink-0 pt-[4.5rem] ${className}`}
+      /* 🛠️ 핵심 수정:
+         - h-[45.188rem] 고정 높이를 과감히 삭제했습니다.
+         - min-h-screen: 사용자 브라우저 화면의 세로 너비를 100% 꽉 채웁니다.
+         - justify-between: 상단 메뉴바, 중앙 캐릭터, 하단 화살표가 화면 전체에 예쁜 간격으로 흩어지도록 정렬합니다.
+      */
+      className={`self-stretch min-h-screen flex flex-col items-start justify-between gap-[1.5rem] max-w-full shrink-0 pt-[4.5rem] pb-[2rem] ${className}`}
     >
       <FrameComponent />
       
-      <div className="self-stretch flex items-start py-[0rem] px-[2.25rem] box-border max-w-full mt-[2rem]">
+      {/* 메인 레이아웃 상자 (중앙으로 정렬 무게중심을 잡기 위해 flex-1 추가) */}
+      <div className="self-stretch flex-1 flex items-center py-[0rem] px-[2.25rem] box-border max-w-full mt-[1rem]">
         <div className="flex-1 flex items-center justify-between gap-[1.625rem] max-w-full mq1225:flex-wrap justify-center">
           
+          {/* 왼쪽 장식 이미지 */}
           <Image
             className="h-[40rem] w-[10rem] object-cover mq1225:hidden"
             loading="lazy"
@@ -25,9 +32,10 @@ const MainContentArea = ({ className = "" }) => {
             src="/images/Group-28@2x.png"
           />
           
+          {/* 중앙 콘텐츠 영역 (텍스트 + 캐릭터 + 버튼들) */}
           <section className="flex-1 flex flex-col items-center box-border max-w-full text-center text-[3rem] text-color-primary-400 font-['BR_B']">
             
-            <div className="flex flex-col items-center gap-[0.75rem] max-w-full mb-[3rem]">
+            <div className="flex flex-col items-center gap-[0.75rem] max-w-full mb-[2.5rem]">
               <div className="flex items-center justify-center gap-[1rem] max-w-full flex-wrap">
                 <Image
                   className="h-[2.938rem] w-[12.063rem] object-cover"
@@ -60,7 +68,7 @@ const MainContentArea = ({ className = "" }) => {
                 />
               </div>
 
-              {/* 윗줄 버튼 2개 (About Me, Project) - 기존 원본 유지 */}
+              {/* 윗줄 버튼 2개 (About Me, Project) */}
               <div className="absolute top-[30%] left-0 right-0 flex justify-between pointer-events-none z-[2] px-[2rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
                 <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 transition-transform">
                   <Image
@@ -95,11 +103,8 @@ const MainContentArea = ({ className = "" }) => {
               </div>
 
               {/* 아랫줄 버튼 2개 (Blog, Contact) */}
-              {/* 🛠️ 구조는 건드리지 않고, 각 button 태그에 -translate-y-[2.5rem]를 주어 본인만 쏙 위로 올렸습니다. */}
               <div className="absolute bottom-0 left-0 right-0 flex justify-between pointer-events-none z-[2] px-[4rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
-                
-                {/* Blog 버튼 개별 이동 */}
-                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 -translate-y-[4rem] transition-transform">
+                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 -translate-y-[2.5rem] transition-transform">
                   <Image
                     className="h-[1.688rem] w-[1.5rem] relative rounded-sm object-contain [transform:_rotate(-180deg)] z-[1]"
                     width={24}
@@ -114,8 +119,7 @@ const MainContentArea = ({ className = "" }) => {
                   </div>
                 </button>
 
-                {/* Contact 버튼 개별 이동 */}
-                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[4rem] transition-transform">
+                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[2.5rem] transition-transform">
                   <Image
                     className="h-[1.688rem] w-[1.5rem] relative rounded-sm object-contain z-[1]"
                     width={24}
@@ -129,22 +133,13 @@ const MainContentArea = ({ className = "" }) => {
                     </b>
                   </div>
                 </button>
-                
               </div>
 
             </div>
 
-            <div className="w-full flex items-center justify-center mt-[6rem]">
-              <Arrow
-                variant="down"
-                vector="/Vector.svg"
-                showArrow
-                arrowHeight="2.625rem"
-                arrowWidth="2.625rem"
-              />
-            </div>
           </section>
           
+          {/* 오른쪽 장식 이미지 */}
           <Image
             className="h-[40rem] w-[10rem] object-contain mq1225:hidden"
             loading="lazy"
@@ -155,6 +150,17 @@ const MainContentArea = ({ className = "" }) => {
             src="/images/Group-29@2x.png"
           />
         </div>
+      </div>
+
+      {/* 아래쪽 화살표가 첫 화면 가장 아래 하단에 예쁘게 안착하도록 밖으로 뺐습니다 */}
+      <div className="w-full flex items-center justify-center">
+        <Arrow
+          variant="down"
+          vector="/Vector.svg"
+          showArrow
+          arrowHeight="2.625rem"
+          arrowWidth="2.625rem"
+        />
       </div>
     </section>
   );
