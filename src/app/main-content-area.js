@@ -152,8 +152,7 @@ const MainContentArea = ({ className = "" }) => {
         {/* 1. 아래쪽 스크롤 유도 화살표 */}
         <div className="w-full flex items-center justify-center">
           <Arrow
-            variant="down"
-            vector="/Vector.svg"
+            vector="/images/arrow.svg"
             showArrow
             arrowHeight="2.25rem"
             arrowWidth="2.25rem"
