@@ -24,7 +24,8 @@ const getPlasIconStyle = (styleKey) => {
 const getText86Style = (styleKey) => {
   switch (styleKey) {
     case "outline-Default-medium":
-      return "[&]:text-color-primary-400"; // 오타 수정: 4001 -> 400
+      // 오타 수정: 4001 -> 400
+      return "[&]:text-color-primary-400";
     case "primary-Default-small":
       return "[&]:shrink-0";
     case "outline-2-Default-small":
