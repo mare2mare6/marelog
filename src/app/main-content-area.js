@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import FrameComponent from "./frame-component";
-import Arrow from "./arrow";
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"; // Arrow import는 완전히 지웠습니다!
 
 const MainContentArea = ({ className = "" }) => {
   return (
@@ -149,17 +148,15 @@ const MainContentArea = ({ className = "" }) => {
 
       {/* 하단 영역 묶음 (화살표 먼저 나오고, 그 바로 밑에 해시태그 바 배치) */}
       <div className="w-full flex flex-col items-center gap-[1.5rem] shrink-0 mt-auto">
-        {/* 1. 아래쪽 스크롤 유도 화살표 */}
-        <div className="w-full flex items-center justify-center">
-          <Arrow
-            vector="/images/arrow.svg"
-            showArrow
-            arrowHeight="2.25rem"
-            arrowWidth="2.25rem"
+                <div className="w-[2.25rem] h-[2.25rem] flex items-center justify-center">
+          <img
+            className="w-full h-full object-contain"
+            src="/images/arrow.svg"
+            alt="아래 방향 화살표"
           />
         </div>
 
-        {/* 2. 메인 화살표 아래 배치된 회색 해시태그 바 (w-full 컨테이너로 찌그러짐 완전 방지) */}
+        {/* 2. 메인 화살표 아래 배치된 회색 해시태그 바 */}
         <div className="self-stretch w-full bg-color-gray-100 overflow-hidden flex items-center py-[1rem] px-[2.25rem] box-border text-left text-[1.25rem] text-color-gray-500 font-[Pretendard]">
           <div className="w-full flex items-center justify-center gap-[1.5rem] flex-wrap">
             <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#퍼블리싱_가능</h3>
