@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 
+
 const Arrow = ({
   variant = "right",
   vector,
-  showArrow,
+  showArrow = true, // <-- 부모가 안 넘겨줘도 기본적으로 보이게 처리
   arrowHeight,
   arrowWidth,
   className = "",
@@ -25,7 +26,7 @@ const Arrow = ({
           width={10}
           height={18}
           alt=""
-          src={vector || "/Vector1.svg"}
+          src={vector || "/images/arrow.svg"}
         />
       </div>
     )
