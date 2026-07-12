@@ -1,11 +1,14 @@
 "use client";
+
 import { useMemo } from "react";
 import PropTypes from "prop-types";
 
-const getText16Style = (styleKey) => {
-  switch (styleKey) {
+const getChipTextStyle = (variant) => {
+  switch (variant) {
     case "small":
       return "[&]:text-[0.875rem]";
+    default:
+      return "";
   }
 };
 
@@ -16,8 +19,6 @@ const Chip = ({
   chipBorder,
   chipHeight,
 }) => {
-  const variantKey = `${variant}`;
-
   const chipStyle = useMemo(() => {
     return {
       border: chipBorder,
@@ -30,11 +31,9 @@ const Chip = ({
       className={`h-[2rem] rounded-radius-full bg-color-gray-50 flex flex-col items-start justify-center py-[0rem] px-[0.75rem] box-border text-left text-[1rem] text-[#000] font-[Pretendard] ${className}`}
       style={chipStyle}
     >
-      <div className="self-stretch flex items-center gap-[0.25rem]">
+      <div className="self-stretch flex items-center gap-[0.25rem] whitespace-nowrap">
         <div className="relative leading-[150%]">#</div>
-        <div
-          className={`relative leading-[150%] ${getText16Style(variantKey)}`}
-        >
+        <div className={`relative leading-[150%] ${getChipTextStyle(variant)}`}>
           {prop}
         </div>
       </div>

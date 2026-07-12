@@ -3,7 +3,7 @@
 import Image from "next/image";
 import PropTypes from "prop-types";
 
-const FrameComponent = ({ className = "" }) => {
+const Header = ({ className = "" }) => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 w-full [backdrop-filter:blur(6px)] bg-[rgba(255,255,255,0.6)] flex items-center justify-between py-[0.75rem] px-[2.25rem] box-border gap-[1.25rem] ${className}`}
@@ -43,8 +43,8 @@ const FrameComponent = ({ className = "" }) => {
   );
 };
 
-FrameComponent.propTypes = {
+Header.propTypes = {
   className: PropTypes.string,
 };
 
-export default FrameComponent;
+export default Header;

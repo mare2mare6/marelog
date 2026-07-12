@@ -22,8 +22,11 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      {/* 👇 바로 이 부분입니다! 클래스네임 뒤에 띄어쓰기 하고 넣어주세요. */}
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+      {/* 폰트 변수를 body의 className 뒤에 띄어쓰기로 안전하게 결합했습니다. */}
+      <body 
+        className={`min-h-full flex flex-col ${geistSans.variable} ${geistMono.variable}`} 
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>

@@ -1,10 +1,11 @@
 "use client";
+
 import { useMemo } from "react";
 import Image from "next/image";
 import Arrow from "./arrow";
 import PropTypes from "prop-types";
 
-const getIconActionPlasStyle = (styleKey) => {
+const getCommonButtonStyle = (styleKey) => {
   switch (styleKey) {
     case "outline-Default-medium":
       return "[&]:border-color-primary-300 [&]:border-solid [&]:border-[1px] [&]:bg-color-gray-0";
@@ -12,28 +13,35 @@ const getIconActionPlasStyle = (styleKey) => {
       return "[&]:bg-color-primary-400 [&]:rounded-[999999px]";
     case "outline-2-Default-small":
       return "[&]:border-color-gray-400 [&]:border-solid [&]:border-[1px] [&]:bg-color-gray-0 [&]:rounded-[999999px]";
+    default:
+      return "";
   }
 };
-const getPlasIconStyle = (styleKey) => {
+
+const getButtonIconStyle = (styleKey) => {
   switch (styleKey) {
     case "primary-Default-small":
     case "outline-2-Default-small":
       return "[&]:shrink-0";
+    default:
+      return "";
   }
 };
-const getText86Style = (styleKey) => {
+
+const getTextStyle = (styleKey) => {
   switch (styleKey) {
     case "outline-Default-medium":
-      // 오타 수정: 4001 -> 400
       return "[&]:text-color-primary-400";
     case "primary-Default-small":
       return "[&]:shrink-0";
     case "outline-2-Default-small":
       return "[&]:text-color-gray-600 [&]:shrink-0";
+    default:
+      return "";
   }
 };
 
-const IconActionPlas = ({
+const CommonButton = ({
   className = "",
   variant = "primary",
   variant2 = "Default",
@@ -50,7 +58,7 @@ const IconActionPlas = ({
 }) => {
   const variantKey = [variant, variant2, variant3].join("-");
 
-  const iconActionPlasStyle = useMemo(() => {
+  const commonButtonStyle = useMemo(() => {
     return {
       height: iconActionPlasHeight,
       flex: iconActionPlasFlex,
@@ -59,14 +67,14 @@ const IconActionPlas = ({
 
   return (
     <button
-      className={`cursor-pointer [border:none] py-[0rem] px-[1.5rem] bg-color-primary-300 h-[3rem] flex-1 rounded-md flex items-center justify-center box-border gap-[0.5rem] ${getIconActionPlasStyle(
+      className={`cursor-pointer [border:none] py-[0rem] px-[1.5rem] bg-color-primary-300 h-[3rem] flex-1 rounded-md flex items-center justify-center box-border gap-[0.5rem] ${getCommonButtonStyle(
         variantKey
       )} ${className}`}
-      style={iconActionPlasStyle}
+      style={commonButtonStyle}
     >
       {!!startIcon && (
         <Image
-          className={`h-[1.5rem] w-[1.5rem] relative ${getPlasIconStyle(
+          className={`h-[1.5rem] w-[1.5rem] relative ${getButtonIconStyle(
             variantKey
           )}`}
           width={24}
@@ -77,7 +85,7 @@ const IconActionPlas = ({
         />
       )}
       <div
-        className={`relative text-[1rem] leading-[150%] font-semibold font-[Pretendard] text-color-gray-0 text-left ${getText86Style(
+        className={`relative text-[1rem] leading-[150%] font-semibold font-[Pretendard] text-color-gray-0 text-left ${getTextStyle(
           variantKey
         )}`}
       >
@@ -94,7 +102,7 @@ const IconActionPlas = ({
   );
 };
 
-IconActionPlas.propTypes = {
+CommonButton.propTypes = {
   className: PropTypes.string,
   prop: PropTypes.string,
   endIcon: PropTypes.bool,
@@ -114,4 +122,4 @@ IconActionPlas.propTypes = {
   iconActionPlasFlex: PropTypes.string,
 };
 
-export default IconActionPlas;
+export default CommonButton;

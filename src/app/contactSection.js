@@ -1,113 +1,29 @@
 "use client";
+
 import { useState } from "react";
 import Image from "next/image";
 import Chip from "./chip";
-import IconActionPlas from "./commonButton";
+import CommonButton from "./commonButton"; // 명칭 통일을 위해 변경
 import PropTypes from "prop-types";
 
-const FrameComponent2 = ({ className = "" }) => {
+const ContactSection = ({ className = "" }) => {
   const [chipItems] = useState([
-    {
-      variant: "default",
-      prop: "uxui",
-      chipBorder: "none",
-      chipHeight: "",
-    },
-    {
-      variant: "default",
-      prop: "일러스트레이터",
-      chipBorder: "none",
-      chipHeight: "",
-    },
-    {
-      variant: "default",
-      prop: "프로덕트디자이너",
-      chipBorder: "none",
-      chipHeight: "",
-    },
-    {
-      variant: "default",
-      prop: "캐릭터",
-      chipBorder: "none",
-      chipHeight: "",
-    },
-    {
-      variant: "default",
-      prop: "기획",
-      chipBorder: "none",
-      chipHeight: "",
-    },
-    {
-      variant: "default",
-      prop: "외주",
-      chipBorder: "none",
-      chipHeight: "",
-    },
-    {
-      variant: "default",
-      prop: "구직",
-      chipBorder: "none",
-      chipHeight: "",
-    },
+    { variant: "default", prop: "uxui", chipBorder: "none", chipHeight: "" },
+    { variant: "default", prop: "일러스트레이터", chipBorder: "none", chipHeight: "" },
+    { variant: "default", prop: "프로덕트디자이너", chipBorder: "none", chipHeight: "" },
+    { variant: "default", prop: "캐릭터", chipBorder: "none", chipHeight: "" },
+    { variant: "default", prop: "기획", chipBorder: "none", chipHeight: "" },
+    { variant: "default", prop: "외주", chipBorder: "none", chipHeight: "" },
+    { variant: "default", prop: "구직", chipBorder: "none", chipHeight: "" },
   ]);
-  const [iconActionPlasItems] = useState([
-    {
-      variant: "primary",
-      variant2: "Default",
-      variant3: "medium",
-      prop: "이력서 다운로드",
-      endIcon: false,
-      startIcon: false,
-      iconActionPlasHeight: "3rem",
-      iconActionPlasFlex: 1,
-      variant1: "right",
-      showArrow: false,
-      arrowHeight: "",
-      arrowWidth: "",
-    },
-    {
-      variant: "outline",
-      variant2: "Default",
-      variant3: "medium",
-      prop: "포트폴리오 보러가기",
-      endIcon: false,
-      startIcon: false,
-      iconActionPlasHeight: "3rem",
-      iconActionPlasFlex: 1,
-      variant1: "right",
-      showArrow: false,
-      arrowHeight: "",
-      arrowWidth: "",
-    },
-    {
-      variant: "outline",
-      variant2: "Default",
-      variant3: "medium",
-      prop: "깃허브 보러가기",
-      endIcon: false,
-      startIcon: false,
-      iconActionPlasHeight: "3rem",
-      iconActionPlasFlex: 1,
-      variant1: "right",
-      showArrow: false,
-      arrowHeight: "",
-      arrowWidth: "",
-    },
-    {
-      variant: "outline",
-      variant2: "Default",
-      variant3: "medium",
-      prop: "링크드인 바로가기",
-      endIcon: false,
-      startIcon: false,
-      iconActionPlasHeight: "3rem",
-      iconActionPlasFlex: 1,
-      variant1: "right",
-      showArrow: false,
-      arrowHeight: "",
-      arrowWidth: "",
-    },
+
+  const [commonButtonItems] = useState([
+    { variant: "primary", variant2: "Default", variant3: "medium", prop: "이력서 다운로드", endIcon: false, startIcon: false, iconActionPlasHeight: "3rem", iconActionPlasFlex: 1, variant1: "right", showArrow: false, arrowHeight: "", arrowWidth: "" },
+    { variant: "outline", variant2: "Default", variant3: "medium", prop: "포트폴리오 보러가기", endIcon: false, startIcon: false, iconActionPlasHeight: "3rem", iconActionPlasFlex: 1, variant1: "right", showArrow: false, arrowHeight: "", arrowWidth: "" },
+    { variant: "outline", variant2: "Default", variant3: "medium", prop: "깃허브 보러가기", endIcon: false, startIcon: false, iconActionPlasHeight: "3rem", iconActionPlasFlex: 1, variant1: "right", showArrow: false, arrowHeight: "", arrowWidth: "" },
+    { variant: "outline", variant2: "Default", variant3: "medium", prop: "링크드인 바로가기", endIcon: false, startIcon: false, iconActionPlasHeight: "3rem", iconActionPlasFlex: 1, variant1: "right", showArrow: false, arrowHeight: "", arrowWidth: "" },
   ]);
+
   return (
     <section
       className={`w-[74.069rem] flex flex-col items-end py-[0rem] pl-[0rem] pr-[1.25rem] box-border gap-[1.25rem] max-w-full shrink-0 ${className}`}
@@ -185,8 +101,8 @@ const FrameComponent2 = ({ className = "" }) => {
       </div>
       <div className="w-[65.631rem] flex items-start justify-end py-[0rem] px-[1.5rem] box-border max-w-full shrink-0">
         <div className="flex-1 flex items-center gap-[1.25rem] max-w-full mq1050:flex-wrap">
-          {iconActionPlasItems.map((item, index) => (
-            <IconActionPlas
+          {commonButtonItems.map((item, index) => (
+            <CommonButton
               key={index}
               variant={item.variant}
               variant2={item.variant2}
@@ -208,8 +124,8 @@ const FrameComponent2 = ({ className = "" }) => {
   );
 };
 
-FrameComponent2.propTypes = {
+ContactSection.propTypes = {
   className: PropTypes.string,
 };
 
-export default FrameComponent2;
+export default ContactSection;

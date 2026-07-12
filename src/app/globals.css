@@ -2,14 +2,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Pretendard:ital,wght@0,400;0,600;0,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=BR+B:ital,wght@0,400&display=swap");
 
-/* 2. 그 다음 Tailwind 시스템을 불러옵니다 */
+/* 2. Tailwind 설정과 시스템 레이어 순서를 먼저 선언합니다 */
+@config "../../tailwind.config.js";
+@layer theme, base, components, utilities;
+
+/* 3. 그 다음 Tailwind 기본 시스템을 불러옵니다 */
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
-@layer theme, base, components, utilities;
-@config "../../tailwind.config.js";
 
-/* 3. 마지막으로 실제 스타일 규칙들을 정의합니다 */
+/* 4. 마지막으로 실제 스타일 규칙들을 정의합니다 */
 body {
   @apply leading-[normal] m-0;
 }

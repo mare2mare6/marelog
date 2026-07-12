@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import MainContentArea from "./heroSection";
+import HeroSection from "./heroSection";
 import Arrow from "./arrow";
 import Chip from "./chip";
-import IconActionPlas from "./commonButton";
-import FrameComponent1 from "./blogCard";
-import FrameComponent2 from "./contactSection";
+import CommonButton from "./commonButton";
+import BlogCard from "./blogCard";
+import ContactSection from "./contactSection";
 
-const MacBookAir1 = () => {
+const PortfolioMain = () => {
   const [chipItems] = useState([
     { variant: "default", prop: "감정일기", chipBorder: "", chipHeight: "2rem" },
     { variant: "default", prop: "AI채팅", chipBorder: "", chipHeight: "2rem" },
@@ -30,7 +30,7 @@ const MacBookAir1 = () => {
     { variant: "default", prop: "AI채팅", chipBorder: "", chipHeight: "" },
     { variant: "default", prop: "나만의_사진첩", chipBorder: "", chipHeight: "" },
   ]);
-  const [iconActionPlasItems] = useState([
+  const [commonButtonItems] = useState([
     { variant: "primary", variant2: "Default", variant3: "small", prop: "최근 글", endIcon: false, startIcon: false, iconActionPlasHeight: "2rem", iconActionPlasFlex: "unset", variant1: "right", showArrow: false, arrowHeight: "", arrowWidth: "" },
     { variant: "outline-2", variant2: "Default", variant3: "small", prop: "프로젝트 회고", endIcon: false, startIcon: false, iconActionPlasHeight: "2rem", iconActionPlasFlex: "unset", variant1: "right", showArrow: false, arrowHeight: "", arrowWidth: "" },
     { variant: "outline-2", variant2: "Default", variant3: "small", prop: "프로젝트 회고", endIcon: false, startIcon: false, iconActionPlasHeight: "2rem", iconActionPlasFlex: "unset", variant1: "right", showArrow: false, arrowHeight: "", arrowWidth: "" },
@@ -38,7 +38,7 @@ const MacBookAir1 = () => {
     { variant: "outline-2", variant2: "Default", variant3: "small", prop: "지식나눔", endIcon: false, startIcon: false, iconActionPlasHeight: "2rem", iconActionPlasFlex: "unset", variant1: "right", showArrow: false, arrowHeight: "", arrowWidth: "" },
     { variant: "outline-2", variant2: "Default", variant3: "small", prop: "기타", endIcon: false, startIcon: false, iconActionPlasHeight: "2rem", iconActionPlasFlex: "unset", variant1: "right", showArrow: false, arrowHeight: "", arrowWidth: "" },
   ]);
-  const [frameComponent1Items] = useState([
+  const [blogCardItems] = useState([
     { chipVariant: "small", chipVariant1: "small", chipProp: "태그명", chipProp1: "태그명", chipBorder: "", chipBorder1: "", chipHeight: "1.5rem", chipHeight1: "1.5rem" },
     { chipVariant: "small", chipVariant1: "small", chipProp: "태그명", chipProp1: "태그명", chipBorder: "", chipBorder1: "", chipHeight: "1.5rem", chipHeight1: "1.5rem" },
     { chipVariant: "small", chipVariant1: "small", chipProp: "태그명", chipProp1: "태그명", chipBorder: "", chipBorder1: "", chipHeight: "1.5rem", chipHeight1: "1.5rem" },
@@ -47,13 +47,12 @@ const MacBookAir1 = () => {
   return (
     <div className="w-full h-auto relative bg-color-gray-0 overflow-hidden flex flex-col items-start pb-[12.25rem] box-border gap-[2.625rem] leading-[normal] tracking-[normal] mq750:gap-[1.313rem]">
       
-      {/* 메인 비주얼 영역 (이제 이 컴포넌트 내부에 해시태그 바가 들어있습니다) */}
-      <MainContentArea />
+      {/* 메인 비주얼 영역 */}
+      <HeroSection />
 
       <main className="self-stretch flex items-start pt-[0rem] px-[0rem] pb-[3.693rem] box-border max-w-full shrink-0 text-left text-[3rem] text-color-gray-0 font-[Pretendard] mq750:pb-[1.25rem] mq1225:pb-[1.563rem]">
         <div className="flex-1 flex items-start relative isolate max-w-full">
           
-          {/* 🛠️ 해시태그 바와 방해되던 이전의 이미지 텍스트 박스를 제거하고 콘텐츠 정렬을 유지했습니다. */}
           <div className="flex-1 flex flex-col items-center max-w-full z-[1] text-[1.25rem] text-color-gray-500">
             <div className="self-stretch flex flex-col items-start py-[0rem] px-[2.25rem] box-border gap-[3rem] max-w-full text-[3rem] text-color-primary-400 font-['BR_B'] mq750:gap-[1.5rem]">
               
@@ -81,7 +80,7 @@ const MacBookAir1 = () => {
                           <Image className="h-[2.519rem] w-full relative" loading="lazy" width={27} height={40} src="/Group-31.svg" alt="" />
                         </div>
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 border-color-gray-400 border-solid border-[1px] box-border overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.5rem] w-full relative object-cover" loading="lazy" width={40} height={40} src="/vscode-1@2x.png" alt="" />
+                          <Image className="h-[2.5'rem] w-full relative object-cover" loading="lazy" width={40} height={40} src="/vscode-1@2x.png" alt="" />
                         </div>
                         <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/Tool-Icon-Items@2x.png" alt="" />
                         <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/Tool-Icon-Items@2x.png" alt="" />
@@ -93,7 +92,8 @@ const MacBookAir1 = () => {
                         <h1 className="m-0 relative text-[length:inherit] leading-[120%] font-semibold font-[inherit] inline-block max-w-full mq450:text-[2.375rem] mq750:text-[3.188rem]">
                           che ha-eun
                         </h1>
-                        <div role="button" className="cursor-pointer top-0 py-[1.25rem] px-[0rem] bg-[transparent] flex items-center gap-[0.25rem]">
+                        {/* [수정 완료] 하이드레이션 에러 방지를 위해 중복 인터랙션 구조 유발을 하는 role="button" 제거 */}
+                        <div className="py-[1.25rem] px-[0rem] bg-[transparent] flex items-center gap-[0.25rem]">
                           <div className="relative text-[1.125rem] leading-[150%] font-[Pretendard] text-color-gray-500 text-left">
                             이력서 보기
                           </div>
@@ -245,7 +245,7 @@ const MacBookAir1 = () => {
                     </section>
 
                   </div>
-                  <IconActionPlas variant="outline" variant2="Default" variant3="medium" prop="더 많은 프로젝트 보기" endIcon startIcon={false} iconActionPlasHeight="3rem" iconActionPlasFlex="unset" variant1="right" showArrow arrowHeight="1.5rem" arrowWidth="1.5rem" />
+                  <CommonButton variant="outline" variant2="Default" variant3="medium" prop="더 많은 프로젝트 보기" endIcon startIcon={false} iconActionPlasHeight="3rem" iconActionPlasFlex="unset" variant1="right" showArrow arrowHeight="1.5rem" arrowWidth="1.5rem" />
                 </div>
               </div>
 
@@ -258,15 +258,15 @@ const MacBookAir1 = () => {
                 <div className="self-stretch flex flex-col items-start py-[0rem] px-[5rem] mq1225:p-[2.5rem]">
                   <div className="self-stretch rounded-xl bg-color-gray-100 flex flex-col items-center py-[2.25rem] px-[1.5rem] gap-[2rem] mq750:gap-[1rem] mq750:py-[1.438rem]">
                     <div className="flex items-center gap-[0.5rem] mq1050:flex-wrap">
-                      {iconActionPlasItems.map((item, index) => (
-                        <IconActionPlas key={index} variant={item.variant} variant2={item.variant2} variant3={item.variant3} prop={item.prop} endIcon={item.endIcon} startIcon={item.startIcon} iconActionPlasHeight={item.iconActionPlasHeight} iconActionPlasFlex={item.iconActionPlasFlex} variant1={item.variant1} showArrow={item.showArrow} arrowHeight={item.arrowHeight} arrowWidth={item.arrowWidth} />
+                      {commonButtonItems.map((item, index) => (
+                        <CommonButton key={index} variant={item.variant} variant2={item.variant2} variant3={item.variant3} prop={item.prop} endIcon={item.endIcon} startIcon={item.startIcon} iconActionPlasHeight={item.iconActionPlasHeight} iconActionPlasFlex={item.iconActionPlasFlex} variant1={item.variant1} showArrow={item.showArrow} arrowHeight={item.arrowHeight} arrowWidth={item.arrowWidth} />
                       ))}
                     </div>
                     <section className="self-stretch flex items-center justify-center flex-wrap content-center gap-[1.25rem]">
                       <Arrow variant="lift" vector="/Vector2.svg" showArrow />
                       <div className="flex-1 flex items-center justify-center gap-[1.5rem] min-w-[35.563rem] mq1050:flex-wrap mq1050:min-w-full">
-                        {frameComponent1Items.map((item, index) => (
-                          <FrameComponent1 key={index} chipVariant={item.chipVariant} chipVariant1={item.chipVariant1} chipProp={item.chipProp} chipProp1={item.chipProp1} chipBorder={item.chipBorder} chipBorder1={item.chipBorder1} chipHeight={item.chipHeight} chipHeight1={item.chipHeight1} />
+                        {blogCardItems.map((item, index) => (
+                          <BlogCard key={index} chipVariant={item.chipVariant} chipVariant1={item.chipVariant1} chipProp={item.chipProp} chipProp1={item.chipProp1} chipBorder={item.chipBorder} chipBorder1={item.chipBorder1} chipHeight={item.chipHeight} chipHeight1={item.chipHeight1} />
                         ))}
                       </div>
                       <Arrow variant="right" vector="/Vector1.svg" showArrow arrowHeight="2.625rem" arrowWidth="2.625rem" />
@@ -279,9 +279,9 @@ const MacBookAir1 = () => {
           </div>
         </div>
       </main>
-      <FrameComponent2 />
+      <ContactSection />
     </div>
   );
 };
 
-export default MacBookAir1;
+export default PortfolioMain;

@@ -1,15 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import FrameComponent from "./header";
-import PropTypes from "prop-types"; // Arrow import는 완전히 지웠습니다!
+import Header from "./header"; // 파일명 매칭 및 가독성을 위해 Header로 변경
+import PropTypes from "prop-types";
 
-const MainContentArea = ({ className = "" }) => {
+const HeroSection = ({ className = "" }) => {
   return (
     <section
       className={`self-stretch min-h-screen flex flex-col items-start justify-between gap-[1.5rem] max-w-full shrink-0 pt-[3rem] pb-[2rem] ${className}`}
     >
-      <FrameComponent />
+      <Header />
       
       {/* 메인 레이아웃 상자 (중앙 캐릭터 영역) */}
       <div className="self-stretch flex-1 flex items-center py-[0rem] px-[2.25rem] box-border max-w-full mt-[0.5rem]">
@@ -148,7 +148,7 @@ const MainContentArea = ({ className = "" }) => {
 
       {/* 하단 영역 묶음 (화살표 먼저 나오고, 그 바로 밑에 해시태그 바 배치) */}
       <div className="w-full flex flex-col items-center gap-[1.5rem] shrink-0 mt-auto">
-                <div className="w-[2.25rem] h-[2.25rem] flex items-center justify-center">
+        <div className="w-[2.25rem] h-[2.25rem] flex items-center justify-center">
           <img
             className="w-full h-full object-contain"
             src="/images/arrow.svg"
@@ -177,8 +177,8 @@ const MainContentArea = ({ className = "" }) => {
   );
 };
 
-MainContentArea.propTypes = {
+HeroSection.propTypes = {
   className: PropTypes.string,
 };
 
-export default MainContentArea;
+export default HeroSection;

@@ -1,15 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import FrameComponent from "./header";
+import Header from "./header"; // Header로 명칭 통일
 import PropTypes from "prop-types";
 
-const MainContentArea = ({ className = "" }) => {
+const HeroSection = ({ className = "" }) => {
   return (
     <section
       className={`self-stretch min-h-screen flex flex-col items-start justify-between gap-[1.5rem] max-w-full shrink-0 pt-[3rem] pb-[2rem] ${className}`}
     >
-      <FrameComponent />
+      <Header />
       
       {/* 메인 레이아웃 상자 (중앙 캐릭터 영역) */}
       <div className="self-stretch flex-1 flex items-center py-[0rem] px-[2.25rem] box-border max-w-full mt-[0.5rem]">
@@ -61,7 +61,73 @@ const MainContentArea = ({ className = "" }) => {
                 />
               </div>
 
-              {/* 버튼 영역 생략 (기존 구조 동일하게 유지됨) */}
+              {/* 윗줄 버튼 2개 (About Me, Project) */}
+              <div className="absolute top-[30%] left-0 right-0 flex justify-between pointer-events-none z-[2] px-[2rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
+                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 transition-transform">
+                  <Image
+                    className="h-[1.5rem] w-[1.3rem] relative rounded-sm object-contain [transform:_rotate(-180deg)] z-[1]"
+                    loading="lazy"
+                    width={20}
+                    height={24}
+                    src="/images/Polygon-4.svg"
+                    alt=""
+                  />
+                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.8rem] px-[1.25rem] z-[2] ml-[-0.2rem] relative">
+                    <h3 className="m-0 relative text-[1.125rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 [transform:_rotate(180deg)] whitespace-nowrap">
+                      About Me 바로가기
+                    </h3>
+                  </div>
+                </button>
+
+                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 transition-transform">
+                  <Image
+                    className="h-[1.5rem] w-[1.3rem] relative rounded-sm object-contain z-[1]"
+                    width={20}
+                    height={24}
+                    src="/images/Polygon-4.svg"
+                    alt=""
+                  />
+                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.8rem] px-[1.25rem] z-[2] ml-[-0.2rem] relative">
+                    <h3 className="m-0 relative text-[1.125rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 whitespace-nowrap">
+                      Project 바로가기
+                    </h3>
+                  </div>
+                </button>
+              </div>
+
+              {/* 아랫줄 버튼 2개 (Blog, Contact) */}
+              <div className="absolute bottom-0 left-0 right-0 flex justify-between pointer-events-none z-[2] px-[4rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
+                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 -translate-y-[1.5rem] transition-transform">
+                  <Image
+                    className="h-[1.5rem] w-[1.3rem] relative rounded-sm object-contain [transform:_rotate(-180deg)] z-[1]"
+                    width={20}
+                    height={24}
+                    src="/images/Polygon-4.svg"
+                    alt=""
+                  />
+                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.8rem] px-[1.25rem] z-[2] ml-[-0.2rem] relative">
+                    <h3 className="m-0 relative text-[1.125rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 [transform:_rotate(180deg)] whitespace-nowrap">
+                      Blog 바로가기
+                    </h3>
+                  </div>
+                </button>
+
+                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[1.5rem] transition-transform">
+                  <Image
+                    className="h-[1.5rem] w-[1.3rem] relative rounded-sm object-contain z-[1]"
+                    width={20}
+                    height={24}
+                    src="/images/Polygon-4.svg"
+                    alt=""
+                  />
+                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.8rem] px-[1.25rem] z-[2] ml-[-0.2rem] relative">
+                    <b className="relative text-[1.125rem] leading-[120%] font-[Pretendard] text-color-gray-600 whitespace-nowrap">
+                      Contact 바로가기
+                    </b>
+                  </div>
+                </button>
+              </div>
+
             </div>
           </section>
           
@@ -81,11 +147,11 @@ const MainContentArea = ({ className = "" }) => {
       {/* 하단 영역 묶음 */}
       <div className="w-full flex flex-col items-center gap-[1.5rem] shrink-0 mt-auto">
         
-        {/* [수정] 컴포넌트 파일 없이 직관적으로 넣은 아래 방향 화살표 */}
-        <div className="w-[2.625rem] h-[2.625rem] flex items-center justify-center transform rotate-90">
+        {/* [수정 완료] 아래 방향을 똑바로 바라보도록 컴포넌트 없이 마크업한 화살표 아이콘 */}
+        <div className="w-[2.625rem] h-[2.625rem] flex items-center justify-center transform rotate-180">
           <img
             className="w-full h-full object-contain"
-            src="/images/arrow.svg" // 만약 public/Vector.svg 면 "/Vector.svg" 로 변경
+            src="/images/arrow.svg"
             alt="아래 방향 화살표"
           />
         </div>
@@ -105,8 +171,8 @@ const MainContentArea = ({ className = "" }) => {
   );
 };
 
-MainContentArea.propTypes = {
+HeroSection.propTypes = {
   className: PropTypes.string,
 };
 
-export default MainContentArea;
+export default HeroSection;
