@@ -13,11 +13,13 @@ const HeroSection = ({ className = "" }) => {
   
   const containerRef = useRef(null);
   
-  // 💡 가로 드래그 스크롤을 제어하기 위한 Ref 및 변수
-  const scrollRef = useRef(null);
-  const isDown = useRef(false);
+  // 💡 가로 드래그, 휠 스크롤 및 무한 루프 처리를 위한 최적화 변수
+  const trackRef = useRef(null);
+  const isDragging = useRef(false);
   const startX = useRef(0);
-  const scrollLeft = useRef(0);
+  const dragOffset = useRef(0); 
+  const wheelOffset = useRef(0); // 휠/터치패드 가로 스크롤 누적값
+  const baseOffset = useRef(0); 
 
   // 1. 1.5초마다 눈 깜빡이는 애니메이션
   useEffect(() => {
@@ -68,31 +70,84 @@ const HeroSection = ({ className = "" }) => {
     setIsMouthOpen(open);
   };
 
-  // 💡 드래그 스크롤 마우스 이벤트 핸들러
-  const handleDragStart = (e) => {
-    if (!scrollRef.current) return;
-    isDown.current = true;
-    scrollRef.current.classList.add("dragging");
-    startX.current = e.pageX - scrollRef.current.offsetLeft;
-    scrollLeft.current = scrollRef.current.scrollLeft;
-  };
+  // 💡 RequestAnimationFrame 기반 무한 애니메이션 + 드래그 + 휠 통합 엔진
+  useEffect(() => {
+    let animationFrameId;
 
-  const handleDragEnd = () => {
-    isDown.current = false;
-    if (scrollRef.current) {
-      scrollRef.current.classList.remove("dragging");
+    const updateLoop = () => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const halfWidth = track.scrollWidth / 2;
+      if (halfWidth <= 0) {
+        animationFrameId = requestAnimationFrame(updateLoop);
+        return;
+      }
+
+      // 사용자가 드래그 중이 아닐 때만 자동 스크롤(왼쪽으로 자연스럽게 흘러감)
+      if (!isDragging.current) {
+        baseOffset.current -= 1.0; 
+      }
+
+      // 최종 이동 거리 계산 = 자동 축적값 + 실시간 드래그값 + 실시간 가로 휠 축적값
+      let totalTranslate = baseOffset.current + dragOffset.current + wheelOffset.current;
+
+      // [핵심] 좌우 100% 한계 없는 무한 궤도 좌표 연동 보정
+      if (totalTranslate <= -halfWidth) {
+        const overflow = totalTranslate % halfWidth;
+        baseOffset.current = overflow - dragOffset.current - wheelOffset.current;
+        totalTranslate = baseOffset.current + dragOffset.current + wheelOffset.current;
+      } else if (totalTranslate > 0) {
+        const overflow = totalTranslate % halfWidth;
+        baseOffset.current = (overflow - halfWidth) - dragOffset.current - wheelOffset.current;
+        totalTranslate = baseOffset.current + dragOffset.current + wheelOffset.current;
+      }
+
+      track.style.transform = `translateX(${totalTranslate}px)`;
+      animationFrameId = requestAnimationFrame(updateLoop);
+    };
+
+    animationFrameId = requestAnimationFrame(updateLoop);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, []);
+
+  // 💡 드래그(잡아끌기) 이벤트 핸들러
+  const handleDragStart = (e) => {
+    isDragging.current = true;
+    startX.current = e.pageX;
+    if (trackRef.current) {
+      trackRef.current.style.cursor = "grabbing";
     }
   };
 
   const handleDragMove = (e) => {
-    if (!isDown.current || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.5; // 스크롤 민감도 배율
-    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+    if (!isDragging.current) return;
+    const currentX = e.pageX;
+    dragOffset.current = (currentX - startX.current) * 1.2;
   };
 
-  // 무한 스크롤용 해시태그 목록 데이터
+  const handleDragEnd = () => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    
+    // 마우스를 놓는 순간 드래그 오프셋을 베이스에 자연스럽게 흡수
+    baseOffset.current += dragOffset.current;
+    dragOffset.current = 0;
+    
+    if (trackRef.current) {
+      trackRef.current.style.cursor = "grab";
+    }
+  };
+
+  // 💡 휠/터치패드 가로 스크롤(제스처) 감지 핸들러
+  const handleWheelScroll = (e) => {
+    // 세로 휠 스크롤(deltaY)과 가로 휠 스크롤(deltaX) 중 값이 더 큰 쪽을 반영
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    
+    // 자동 스크롤 방향과 어우러지도록 누적값에 변조 대입
+    wheelOffset.current -= delta * 0.8;
+  };
+
   const hashtags = [
     "#프로덕트_디자이너", "#퍼블리싱_가능", "#개발자_협업다수", 
     "#실전투입_가능", "#AI_친화", "#사용자_친화", 
@@ -107,34 +162,6 @@ const HeroSection = ({ className = "" }) => {
       onMouseLeave={handleMouseLeaveContainer}
       className={`self-stretch min-h-screen flex flex-col items-start justify-between gap-[1.5rem] max-w-full shrink-0 pt-[3rem] pb-[2rem] select-none ${className}`}
     >
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-        .marquee-wrapper {
-          overflow-x: auto;
-          scrollbar-width: none; /* Firefox 스크롤바 숨김 */
-          cursor: grab;
-        }
-        .marquee-wrapper::-webkit-scrollbar {
-          display: none; /* Chrome/Safari 스크롤바 숨김 */
-        }
-        .marquee-wrapper.dragging {
-          cursor: grabbing;
-        }
-        .marquee-container {
-          display: flex;
-          width: max-content;
-          animation: marquee 25s linear infinite;
-        }
-        /* 드래그하고 있거나 마우스를 올렸을 때는 무한 루프 애니메이션을 멈춰 연동을 자연스럽게 만듭니다 */
-        .marquee-wrapper:hover .marquee-container,
-        .marquee-wrapper.dragging .marquee-container {
-          animation-play-state: paused;
-        }
-      `}</style>
-
       <Header />
       
       {/* 메인 레이아웃 상자 (중앙 캐릭터 영역) */}
@@ -332,36 +359,37 @@ const HeroSection = ({ className = "" }) => {
           />
         </div>
 
-        {/* [수정] 무한 롤링 및 마우스 핸드 드래그가 결합된 가로 해시태그 바 */}
-        <div className="self-stretch w-full bg-color-gray-100 overflow-hidden flex items-center py-[1rem] box-border text-left text-[1.25rem] text-color-gray-500 font-[Pretendard]">
+        {/* 💡 [완벽 해결] 잡아 끌기(Drag)와 터치패드 가로휠 스크롤(Wheel) 둘 다 무한 반복되는 하단 바 */}
+        <div 
+          onMouseDown={handleDragStart}
+          onMouseMove={handleDragMove}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+          onWheel={handleWheelScroll}
+          className="self-stretch w-full bg-color-gray-100 overflow-hidden flex items-center py-[1rem] box-border text-left text-[1.25rem] text-color-gray-500 font-[Pretendard]"
+          style={{ cursor: "grab" }}
+        >
           <div 
-            ref={scrollRef}
-            onMouseDown={handleDragStart}
-            onMouseLeave={handleDragEnd}
-            onMouseUp={handleDragEnd}
-            onMouseMove={handleDragMove}
-            className="marquee-wrapper w-full select-none"
+            ref={trackRef}
+            className="flex gap-[2rem] px-[1.25rem] will-change-transform"
+            style={{ width: "max-content" }}
           >
-            <div className="marquee-container gap-[2em] px-[1.25rem]">
-              
-              {/* 오리지널 텍스트 세트 */}
-              <div className="flex items-center gap-[2rem] shrink-0">
-                {hashtags.map((tag, idx) => (
-                  <h3 key={`orig-${idx}`} className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap">
-                    {tag}
-                  </h3>
-                ))}
-              </div>
+            {/* 오리지널 텍스트 세트 */}
+            <div className="flex items-center gap-[2rem] shrink-0">
+              {hashtags.map((tag, idx) => (
+                <h3 key={`orig-${idx}`} className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap">
+                  {tag}
+                </h3>
+              ))}
+            </div>
 
-              {/* 끊김 방지 클론 세트 */}
-              <div className="flex items-center gap-[2rem] shrink-0" aria-hidden="true">
-                {hashtags.map((tag, idx) => (
-                  <h3 key={`clone-${idx}`} className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap">
-                    {tag}
-                  </h3>
-                ))}
-              </div>
-
+            {/* 끊김 방지 클론 세트 */}
+            <div className="flex items-center gap-[2rem] shrink-0" aria-hidden="true">
+              {hashtags.map((tag, idx) => (
+                <h3 key={`clone-${idx}`} className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap">
+                  {tag}
+                </h3>
+              ))}
             </div>
           </div>
         </div>
