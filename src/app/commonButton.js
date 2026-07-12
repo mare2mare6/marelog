@@ -91,6 +91,8 @@ const CommonButton = ({
       >
         {prop}
       </div>
+      
+      {/* Arrow 내부가 div로 수정되었으므로 button 중첩 오류가 완벽하게 방지됩니다 */}
       <Arrow
         variant={variant1}
         vector="/Vector1.svg"
@@ -111,13 +113,9 @@ CommonButton.propTypes = {
   showArrow: PropTypes.bool,
   arrowHeight: PropTypes.any,
   arrowWidth: PropTypes.any,
-
-  /** Variant props */
   variant: PropTypes.string,
   variant2: PropTypes.string,
   variant3: PropTypes.string,
-
-  /** Style props */
   iconActionPlasHeight: PropTypes.string,
   iconActionPlasFlex: PropTypes.string,
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Header from "./header"; // 파일명 매칭 및 가독성을 위해 Header로 변경
+import Header from "./header"; // Header로 명칭 통일
 import PropTypes from "prop-types";
 
 const HeroSection = ({ className = "" }) => {
@@ -26,7 +26,7 @@ const HeroSection = ({ className = "" }) => {
             src="/images/Group-28@2x.png"
           />
           
-          {/* 중앙 콘텐츠 영역 (텍스트 + 캐릭터 + 버튼들) */}
+          {/* 중앙 콘텐츠 영역 */}
           <section className="flex-1 flex flex-col items-center box-border max-w-full text-center text-[2.5rem] text-color-primary-400 font-['BR_B']">
             
             <div className="flex flex-col items-center gap-[0.5rem] max-w-full mb-[1.5rem]">
@@ -50,7 +50,6 @@ const HeroSection = ({ className = "" }) => {
             </div>
 
             <div className="w-full max-w-[55rem] flex flex-col items-center gap-[1.5rem] relative px-[1rem]">
-              
               <div className="w-[18rem] h-[18rem] flex items-center justify-center z-[1]">
                 <Image
                   className="w-full h-full object-cover"
@@ -62,9 +61,10 @@ const HeroSection = ({ className = "" }) => {
                 />
               </div>
 
+              {/* [수정 완료] 하이드레이션 오류 방지를 위해 상위 button 태그를 div 요소로 안전하게 격리 변경 */}
               {/* 윗줄 버튼 2개 (About Me, Project) */}
               <div className="absolute top-[30%] left-0 right-0 flex justify-between pointer-events-none z-[2] px-[2rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
-                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 transition-transform">
+                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 transition-transform">
                   <Image
                     className="h-[1.5rem] w-[1.3rem] relative rounded-sm object-contain [transform:_rotate(-180deg)] z-[1]"
                     loading="lazy"
@@ -78,9 +78,9 @@ const HeroSection = ({ className = "" }) => {
                       About Me 바로가기
                     </h3>
                   </div>
-                </button>
+                </div>
 
-                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 transition-transform">
+                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 transition-transform">
                   <Image
                     className="h-[1.5rem] w-[1.3rem] relative rounded-sm object-contain z-[1]"
                     width={20}
@@ -93,12 +93,13 @@ const HeroSection = ({ className = "" }) => {
                       Project 바로가기
                     </h3>
                   </div>
-                </button>
+                </div>
               </div>
 
+              {/* [수정 완료] 하이드레이션 오류 방지를 위해 상위 button 태그를 div 요소로 안전하게 격리 변경 */}
               {/* 아랫줄 버튼 2개 (Blog, Contact) */}
               <div className="absolute bottom-0 left-0 right-0 flex justify-between pointer-events-none z-[2] px-[4rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
-                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 -translate-y-[1.5rem] transition-transform">
+                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 -translate-y-[1.5rem] transition-transform">
                   <Image
                     className="h-[1.5rem] w-[1.3rem] relative rounded-sm object-contain [transform:_rotate(-180deg)] z-[1]"
                     width={20}
@@ -111,9 +112,9 @@ const HeroSection = ({ className = "" }) => {
                       Blog 바로가기
                     </h3>
                   </div>
-                </button>
+                </div>
 
-                <button className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[1.5rem] transition-transform">
+                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[1.5rem] transition-transform">
                   <Image
                     className="h-[1.5rem] w-[1.3rem] relative rounded-sm object-contain z-[1]"
                     width={20}
@@ -126,11 +127,10 @@ const HeroSection = ({ className = "" }) => {
                       Contact 바로가기
                     </b>
                   </div>
-                </button>
+                </div>
               </div>
 
             </div>
-
           </section>
           
           {/* 오른쪽 장식 이미지 */}
@@ -146,9 +146,11 @@ const HeroSection = ({ className = "" }) => {
         </div>
       </div>
 
-      {/* 하단 영역 묶음 (화살표 먼저 나오고, 그 바로 밑에 해시태그 바 배치) */}
+      {/* 하단 영역 묶음 */}
       <div className="w-full flex flex-col items-center gap-[1.5rem] shrink-0 mt-auto">
-        <div className="w-[2.25rem] h-[2.25rem] flex items-center justify-center">
+        
+        {/* 아래 방향을 똑바로 바라보도록 컴포넌트 없이 마크업한 화살표 아이콘 */}
+        <div className="w-[2.625rem] h-[2.625rem] flex items-center justify-center transform rotate-180">
           <img
             className="w-full h-full object-contain"
             src="/images/arrow.svg"
@@ -156,7 +158,7 @@ const HeroSection = ({ className = "" }) => {
           />
         </div>
 
-        {/* 2. 메인 화살표 아래 배치된 회색 해시태그 바 */}
+        {/* 메인 화살표 아래 배치된 회색 해시태그 바 */}
         <div className="self-stretch w-full bg-color-gray-100 overflow-hidden flex items-center py-[1rem] px-[2.25rem] box-border text-left text-[1.25rem] text-color-gray-500 font-[Pretendard]">
           <div className="w-full flex items-center justify-center gap-[1.5rem] flex-wrap">
             <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#퍼블리싱_가능</h3>
@@ -164,12 +166,6 @@ const HeroSection = ({ className = "" }) => {
             <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#실전투입_가능</h3>
             <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#AI_친화</h3>
             <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#사용자_친화</h3>
-            <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#성장하는</h3>
-            <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#완성형</h3>
-            <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#실전에_강한</h3>
-            <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#UXUI</h3>
-            <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#일러스트</h3>
-            <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#기획가능</h3>
           </div>
         </div>
       </div>
