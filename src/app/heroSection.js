@@ -12,6 +12,12 @@ const HeroSection = ({ className = "" }) => {
   const [faceOffset, setFaceOffset] = useState({ x: 0, y: 0 }); 
   
   const containerRef = useRef(null);
+  
+  // 💡 가로 드래그 스크롤을 제어하기 위한 Ref 및 변수
+  const scrollRef = useRef(null);
+  const isDown = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
 
   // 1. 1.5초마다 눈 깜빡이는 애니메이션
   useEffect(() => {
@@ -62,6 +68,30 @@ const HeroSection = ({ className = "" }) => {
     setIsMouthOpen(open);
   };
 
+  // 💡 드래그 스크롤 마우스 이벤트 핸들러
+  const handleDragStart = (e) => {
+    if (!scrollRef.current) return;
+    isDown.current = true;
+    scrollRef.current.classList.add("dragging");
+    startX.current = e.pageX - scrollRef.current.offsetLeft;
+    scrollLeft.current = scrollRef.current.scrollLeft;
+  };
+
+  const handleDragEnd = () => {
+    isDown.current = false;
+    if (scrollRef.current) {
+      scrollRef.current.classList.remove("dragging");
+    }
+  };
+
+  const handleDragMove = (e) => {
+    if (!isDown.current || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5; // 스크롤 민감도 배율
+    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
   // 무한 스크롤용 해시태그 목록 데이터
   const hashtags = [
     "#프로덕트_디자이너", "#퍼블리싱_가능", "#개발자_협업다수", 
@@ -77,19 +107,31 @@ const HeroSection = ({ className = "" }) => {
       onMouseLeave={handleMouseLeaveContainer}
       className={`self-stretch min-h-screen flex flex-col items-start justify-between gap-[1.5rem] max-w-full shrink-0 pt-[3rem] pb-[2rem] select-none ${className}`}
     >
-      {/* 💡 글로벌 컴포넌트 내에 무한 롤링 서브 스타일 주입 */}
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0%); }
           100% { transform: translateX(-50%); }
+        }
+        .marquee-wrapper {
+          overflow-x: auto;
+          scrollbar-width: none; /* Firefox 스크롤바 숨김 */
+          cursor: grab;
+        }
+        .marquee-wrapper::-webkit-scrollbar {
+          display: none; /* Chrome/Safari 스크롤바 숨김 */
+        }
+        .marquee-wrapper.dragging {
+          cursor: grabbing;
         }
         .marquee-container {
           display: flex;
           width: max-content;
           animation: marquee 25s linear infinite;
         }
-        .marquee-container:hover {
-          animation-play-state: paused; /* 마우스 오버 시 멈춤 효과 (선택사항) */
+        /* 드래그하고 있거나 마우스를 올렸을 때는 무한 루프 애니메이션을 멈춰 연동을 자연스럽게 만듭니다 */
+        .marquee-wrapper:hover .marquee-container,
+        .marquee-wrapper.dragging .marquee-container {
+          animation-play-state: paused;
         }
       `}</style>
 
@@ -138,14 +180,11 @@ const HeroSection = ({ className = "" }) => {
               
               {/* 중앙 강아지 캐릭터 움직임 공간 */}
               <div className="w-[20.5rem] h-[20.5rem] relative flex items-center justify-center z-[1] overflow-hidden">
-                {/* 1. 몸 & 얼굴 베이스 레이어 */}
                 <img 
                   src="/images/main_dog/body.png" 
                   alt="강아지 몸" 
                   className="absolute top-0 left-0 w-full h-full object-contain" 
                 />
-
-                {/* 2. 코 & 눈썹 레이어 */}
                 <img 
                   src="/images/main_dog/nose.png" 
                   alt="코와 눈썹" 
@@ -155,8 +194,6 @@ const HeroSection = ({ className = "" }) => {
                     transition: 'transform 0.1s ease-out'
                   }}
                 />
-
-                {/* 3. 눈 레이어 (깜빡임 + 위치 연동) */}
                 {isBlinking ? (
                   <img 
                     src="/images/main_dog/eye_close.png" 
@@ -177,8 +214,6 @@ const HeroSection = ({ className = "" }) => {
                     }}
                   />
                 )}
-
-                {/* 4. 입 레이어 */}
                 <img 
                   src={isMouthOpen ? "/images/main_dog/mouse_open.png" : "/images/main_dog/mouse_close.png"} 
                   alt="강아지 입" 
@@ -188,7 +223,6 @@ const HeroSection = ({ className = "" }) => {
 
               {/* 윗줄 버튼 2개 (About Me, Project) */}
               <div className="absolute top-[32%] left-0 right-0 flex justify-between pointer-events-none z-[2] px-[1.5rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
-                {/* About Me */}
                 <div 
                   onMouseEnter={() => handleTextHover(true)}
                   onMouseLeave={() => handleTextHover(false)}
@@ -209,7 +243,6 @@ const HeroSection = ({ className = "" }) => {
                   />
                 </div>
 
-                {/* Project */}
                 <div 
                   onMouseEnter={() => handleTextHover(true)}
                   onMouseLeave={() => handleTextHover(false)}
@@ -232,7 +265,6 @@ const HeroSection = ({ className = "" }) => {
 
               {/* 아랫줄 버튼 2개 (Blog, Contact) */}
               <div className="absolute bottom-0 left-0 right-0 flex justify-between pointer-events-none z-[2] px-[3.5rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
-                {/* Blog */}
                 <div 
                   onMouseEnter={() => handleTextHover(true)}
                   onMouseLeave={() => handleTextHover(false)}
@@ -252,7 +284,6 @@ const HeroSection = ({ className = "" }) => {
                   />
                 </div>
 
-                {/* Contact */}
                 <div 
                   onMouseEnter={() => handleTextHover(true)}
                   onMouseLeave={() => handleTextHover(false)}
@@ -301,26 +332,37 @@ const HeroSection = ({ className = "" }) => {
           />
         </div>
 
-        {/* [수정] 무한 스크롤 애니메이션이 적용된 하단 해시태그 바 */}
+        {/* [수정] 무한 롤링 및 마우스 핸드 드래그가 결합된 가로 해시태그 바 */}
         <div className="self-stretch w-full bg-color-gray-100 overflow-hidden flex items-center py-[1rem] box-border text-left text-[1.25rem] text-color-gray-500 font-[Pretendard]">
-          <div className="marquee-container gap-[2rem] px-[1.25rem]">
-            
-            <div className="flex items-center gap-[2.5rem] shrink-0">
-              {hashtags.map((tag, idx) => (
-                <h3 key={`orig-${idx}`} className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap">
-                  {tag}
-                </h3>
-              ))}
-            </div>
+          <div 
+            ref={scrollRef}
+            onMouseDown={handleDragStart}
+            onMouseLeave={handleDragEnd}
+            onMouseUp={handleDragEnd}
+            onMouseMove={handleDragMove}
+            className="marquee-wrapper w-full select-none"
+          >
+            <div className="marquee-container gap-[2em] px-[1.25rem]">
+              
+              {/* 오리지널 텍스트 세트 */}
+              <div className="flex items-center gap-[2rem] shrink-0">
+                {hashtags.map((tag, idx) => (
+                  <h3 key={`orig-${idx}`} className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap">
+                    {tag}
+                  </h3>
+                ))}
+              </div>
 
-            <div className="flex items-center gap-[2rem] shrink-0" aria-hidden="true">
-              {hashtags.map((tag, idx) => (
-                <h3 key={`clone-${idx}`} className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap">
-                  {tag}
-                </h3>
-              ))}
-            </div>
+              {/* 끊김 방지 클론 세트 */}
+              <div className="flex items-center gap-[2rem] shrink-0" aria-hidden="true">
+                {hashtags.map((tag, idx) => (
+                  <h3 key={`clone-${idx}`} className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap">
+                    {tag}
+                  </h3>
+                ))}
+              </div>
 
+            </div>
           </div>
         </div>
       </div>
