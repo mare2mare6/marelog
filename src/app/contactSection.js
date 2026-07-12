@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Chip from "./chip";
-import IconActionPlas from "./icon-action-plas";
+import IconActionPlas from "./commonButton";
 import PropTypes from "prop-types";
 
 const FrameComponent2 = ({ className = "" }) => {

@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import MainContentArea from "./main-content-area";
+import MainContentArea from "./heroSection";
 import Arrow from "./arrow";
 import Chip from "./chip";
-import IconActionPlas from "./icon-action-plas";
-import FrameComponent1 from "./frame-component1";
-import FrameComponent2 from "./frame-component2";
+import IconActionPlas from "./commonButton";
+import FrameComponent1 from "./blogCard";
+import FrameComponent2 from "./contactSection";
 
 const MacBookAir1 = () => {
   const [chipItems] = useState([

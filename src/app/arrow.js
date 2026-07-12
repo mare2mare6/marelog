@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import FrameComponent from "./frame-component";
+import FrameComponent from "./header";
 import PropTypes from "prop-types";
 
 const MainContentArea = ({ className = "" }) => {

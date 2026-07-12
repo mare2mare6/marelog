@@ -1,9 +1,9 @@
-import MacBookAir1 from "./mac-book-air1";
+import MacBookAir1 from "./portfolioMain.js";
 
 export default function Home() {
   return (
     <main>
-      <MacBookAir1 />
+      <portfolioMain />
     </main>
   );
 }
