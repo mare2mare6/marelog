@@ -1,13 +1,73 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Header from "./header"; // Header로 명칭 통일
 import PropTypes from "prop-types";
 
 const HeroSection = ({ className = "" }) => {
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [isMouthOpen, setIsMouthOpen] = useState(false);
+  const [eyeOffset, setEyeOffset] = useState({ x: 0, y: 0 });
+  const [faceOffset, setFaceOffset] = useState({ x: 0, y: 0 }); 
+  
+  const containerRef = useRef(null);
+
+  // 1. 1.5초마다 눈 깜빡이는 애니메이션
+  useEffect(() => {
+    const blinkInterval = setInterval(() => {
+      setIsBlinking(true);
+      setTimeout(() => {
+        setIsBlinking(false);
+      }, 150);
+    }, 1500);
+
+    return () => clearInterval(blinkInterval);
+  }, []);
+
+  // 2. 마우스 움직임에 따라 눈동자와 코/눈썹 위치 계산
+  const handleMouseMove = (e) => {
+    if (!containerRef.current) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const dogCenterX = rect.left + rect.width / 2;
+    const dogCenterY = rect.top + rect.height / 2;
+
+    const deltaX = e.clientX - dogCenterX;
+    const deltaY = e.clientY - dogCenterY;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    
+    if (distance === 0) {
+      setEyeOffset({ x: 0, y: 0 });
+      setFaceOffset({ x: 0, y: 0 });
+    } else {
+      const maxEyeMove = 4; 
+      const eyeX = (deltaX / distance) * Math.min(maxEyeMove, distance * 0.035);
+      const eyeY = (deltaY / distance) * Math.min(maxEyeMove, distance * 0.035);
+      setEyeOffset({ x: eyeX, y: eyeY });
+
+      const maxFaceMove = 2; 
+      const faceX = (deltaX / distance) * Math.min(maxFaceMove, distance * 0.01);
+      const faceY = (deltaY / distance) * Math.min(maxFaceMove, distance * 0.01);
+      setFaceOffset({ x: faceX, y: faceY });
+    }
+  };
+
+  const handleMouseLeaveContainer = () => {
+    setEyeOffset({ x: 0, y: 0 });
+    setFaceOffset({ x: 0, y: 0 });
+  };
+
+  const handleTextHover = (open) => {
+    setIsMouthOpen(open);
+  };
+
   return (
     <section
-      className={`self-stretch min-h-screen flex flex-col items-start justify-between gap-[1.5rem] max-w-full shrink-0 pt-[3rem] pb-[2rem] ${className}`}
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeaveContainer}
+      className={`self-stretch min-h-screen flex flex-col items-start justify-between gap-[1.5rem] max-w-full shrink-0 pt-[3rem] pb-[2rem] select-none ${className}`}
     >
       <Header />
       
@@ -52,15 +112,54 @@ const HeroSection = ({ className = "" }) => {
 
             <div className="w-full max-w-[58rem] flex flex-col items-center gap-[1.5rem] relative px-[1rem]">
               
-              {/* 중앙 캐릭터 영역 */}
-              <div className="w-[20.5rem] h-[20.5rem] flex items-center justify-center z-[1]">
-                <Image
-                  className="w-full h-full object-cover"
-                  width={328}
-                  height={328}
-                  sizes="100vw"
-                  alt="캐릭터"
-                  src="/images/all-1@2x.png"
+              {/* [대치 완료] 중앙 강아지 캐릭터 움직임 공간 (사이즈 20.5rem로 기존 구조와 완벽 일치) */}
+              <div className="w-[20.5rem] h-[20.5rem] relative flex items-center justify-center z-[1] overflow-hidden">
+                
+                {/* 1. 몸 & 얼굴 베이스 레이어 */}
+                <img 
+                  src="/images/main_dog/body.png" 
+                  alt="강아지 몸" 
+                  className="absolute top-0 left-0 w-full h-full object-contain" 
+                />
+
+                {/* 2. 코 & 눈썹 레이어 */}
+                <img 
+                  src="/images/main_dog/nose.png" 
+                  alt="코와 눈썹" 
+                  className="absolute top-0 left-0 w-full h-full object-contain" 
+                  style={{
+                    transform: `translate(${faceOffset.x}px, ${faceOffset.y}px)`,
+                    transition: 'transform 0.1s ease-out'
+                  }}
+                />
+
+                {/* 3. 눈 레이어 (깜빡임 + 위치 연동) */}
+                {isBlinking ? (
+                  <img 
+                    src="/images/main_dog/eye_close.png" 
+                    alt="감은 눈" 
+                    className="absolute top-0 left-0 w-full h-full object-contain" 
+                    style={{
+                      transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px)`
+                    }}
+                  />
+                ) : (
+                  <img 
+                    src="/images/main_dog/eye_open.png" 
+                    alt="뜬 눈" 
+                    className="absolute top-0 left-0 w-full h-full object-contain"
+                    style={{
+                      transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px)`,
+                      transition: 'transform 0.06s ease-out'
+                    }}
+                  />
+                )}
+
+                {/* 4. 입 레이어 */}
+                <img 
+                  src={isMouthOpen ? "/images/main_dog/mouse_open.png" : "/images/main_dog/mouse_close.png"} 
+                  alt="강아지 입" 
+                  className="absolute top-0 left-0 w-full h-full object-contain" 
                 />
               </div>
 
@@ -68,7 +167,11 @@ const HeroSection = ({ className = "" }) => {
               <div className="absolute top-[32%] left-0 right-0 flex justify-between pointer-events-none z-[2] px-[1.5rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
                 
                 {/* About Me */}
-                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 transition-transform">
+                <div 
+                  onMouseEnter={() => handleTextHover(true)}
+                  onMouseLeave={() => handleTextHover(false)}
+                  className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 transition-transform"
+                >
                   <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] relative">
                     <h3 className="m-0 relative text-[1.18rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 whitespace-nowrap">
                       About Me 바로가기
@@ -85,7 +188,11 @@ const HeroSection = ({ className = "" }) => {
                 </div>
 
                 {/* Project */}
-                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 transition-transform">
+                <div 
+                  onMouseEnter={() => handleTextHover(true)}
+                  onMouseLeave={() => handleTextHover(false)}
+                  className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 transition-transform"
+                >
                   <Image
                     className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain z-[1] mr-[-0.25rem]"
                     width={24}
@@ -104,7 +211,12 @@ const HeroSection = ({ className = "" }) => {
               {/* 아랫줄 버튼 2개 (Blog, Contact) */}
               <div className="absolute bottom-0 left-0 right-0 flex justify-between pointer-events-none z-[2] px-[3.5rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
                 
-                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[5rem] translate-x-[2rem] transition-transform">
+                {/* Blog */}
+                <div 
+                  onMouseEnter={() => handleTextHover(true)}
+                  onMouseLeave={() => handleTextHover(false)}
+                  className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[5rem] translate-x-[2rem] transition-transform"
+                >
                   <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] relative">
                     <h3 className="m-0 relative text-[1.18rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 whitespace-nowrap">
                       Blog 바로가기
@@ -120,7 +232,11 @@ const HeroSection = ({ className = "" }) => {
                 </div>
 
                 {/* Contact */}
-                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[5rem] transition-transform">
+                <div 
+                  onMouseEnter={() => handleTextHover(true)}
+                  onMouseLeave={() => handleTextHover(false)}
+                  className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[5rem] transition-transform"
+                >
                   <Image
                     className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain z-[1] mr-[-0.25rem]"
                     width={24}
@@ -164,7 +280,7 @@ const HeroSection = ({ className = "" }) => {
           />
         </div>
 
-        {/* 메인 화살표 아래 배치된 회색 해시태그 바 */}
+        {/* 하단 회색 해시태그 바 */}
         <div className="self-stretch w-full bg-color-gray-100 overflow-hidden flex items-center py-[1rem] px-[2.25rem] box-border text-left text-[1.25rem] text-color-gray-500 font-[Pretendard]">
           <div className="w-full flex items-center justify-center gap-[1.5rem] flex-wrap">
             <h3 className="m-0 relative text-[length:inherit] leading-[120%] font-bold font-[inherit] whitespace-nowrap mq450:text-[1rem]">#퍼블리싱_가능</h3>
