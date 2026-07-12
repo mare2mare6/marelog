@@ -15,7 +15,6 @@ const HeroSection = ({ className = "" }) => {
       <div className="self-stretch flex-1 flex items-center py-[0rem] px-[2.25rem] box-border max-w-full mt-[0.5rem]">
         <div className="w-full flex items-center justify-between gap-[1.75rem] max-w-full mq1225:flex-wrap justify-center">
           
-          {/* [수정] object-contain으로 변경하여 절대 잘리지 않게 방어하고 크기 미세 확대 */}
           {/* 왼쪽 장식 이미지 */}
           <div className="h-[37rem] w-[10rem] relative shrink-0 mq1225:hidden">
             <Image
@@ -28,7 +27,7 @@ const HeroSection = ({ className = "" }) => {
             />
           </div>
           
-          {/* 중앙 콘텐츠 영역 (글자 크기 미세 확대) */}
+          {/* 중앙 콘텐츠 영역 */}
           <section className="flex-1 flex flex-col items-center box-border max-w-full text-center text-[2.65rem] text-color-primary-400 font-['BR_B']">
             
             <div className="flex flex-col items-center gap-[0.6rem] max-w-full mb-[1.75rem]">
@@ -51,10 +50,9 @@ const HeroSection = ({ className = "" }) => {
               </h3>
             </div>
 
-            {/* 배치 반경을 살짝 넓혀 내부 요소 공간 확보 */}
             <div className="w-full max-w-[58rem] flex flex-col items-center gap-[1.5rem] relative px-[1rem]">
               
-              {/* [미세 확대] 중앙 캐릭터 영역 볼륨 업 */}
+              {/* 중앙 캐릭터 영역 */}
               <div className="w-[20.5rem] h-[20.5rem] flex items-center justify-center z-[1]">
                 <Image
                   className="w-full h-full object-cover"
@@ -66,33 +64,36 @@ const HeroSection = ({ className = "" }) => {
                 />
               </div>
 
-              {/* [미세 확대] 윗줄 버튼 2개 (About Me, Project) */}
+              {/* 윗줄 버튼 2개 (About Me, Project) */}
               <div className="absolute top-[32%] left-0 right-0 flex justify-between pointer-events-none z-[2] px-[1.5rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
-                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 transition-transform">
+                
+                {/* About Me */}
+                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 transition-transform">
+                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] relative">
+                    <h3 className="m-0 relative text-[1.18rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 whitespace-nowrap">
+                      About Me 바로가기
+                    </h3>
+                  </div>
                   <Image
-                    className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain [transform:_rotate(-180deg)] z-[1]"
+                    className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain z-[1] ml-[-0.25rem] transform rotate-180"
                     loading="lazy"
                     width={24}
                     height={28}
                     src="/images/Polygon-4.svg"
                     alt=""
                   />
-                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] ml-[-0.2rem] relative">
-                    <h3 className="m-0 relative text-[1.18rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 [transform:_rotate(180deg)] whitespace-nowrap">
-                      About Me 바로가기
-                    </h3>
-                  </div>
                 </div>
 
+                {/* Project */}
                 <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 transition-transform">
                   <Image
-                    className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain z-[1]"
+                    className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain z-[1] mr-[-0.25rem]"
                     width={24}
                     height={28}
                     src="/images/Polygon-4.svg"
                     alt=""
                   />
-                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] ml-[-0.2rem] relative">
+                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] relative">
                     <h3 className="m-0 relative text-[1.18rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 whitespace-nowrap">
                       Project 바로가기
                     </h3>
@@ -100,32 +101,34 @@ const HeroSection = ({ className = "" }) => {
                 </div>
               </div>
 
-              {/* [미세 확대] 아랫줄 버튼 2개 (Blog, Contact) */}
+              {/* 아랫줄 버튼 2개 (Blog, Contact) */}
               <div className="absolute bottom-0 left-0 right-0 flex justify-between pointer-events-none z-[2] px-[3.5rem] mq750:relative mq750:top-0 mq750:flex-col mq750:items-center mq750:gap-[1rem] mq750:pointer-events-auto">
-                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center [transform:_rotate(180deg)] pointer-events-auto hover:scale-105 -translate-y-[1.25rem] transition-transform">
-                  <Image
-                    className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain [transform:_rotate(-180deg)] z-[1]"
-                    width={24}
-                    height={28}
-                    src="/images/Polygon-4.svg"
-                    alt=""
-                  />
-                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] ml-[-0.2rem] relative transform rotate-180">
-                    <h3 className="m-0 relative text-[1.18rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 [transform:_rotate(180deg)] whitespace-nowrap">
+                
+                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[5rem] translate-x-[2rem] transition-transform">
+                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] relative">
+                    <h3 className="m-0 relative text-[1.18rem] leading-[120%] font-bold font-[Pretendard] text-color-gray-600 whitespace-nowrap">
                       Blog 바로가기
                     </h3>
                   </div>
-                </div>
-
-                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[1.25rem] transition-transform">
                   <Image
-                    className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain z-[1]"
+                    className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain z-[1] ml-[-0.25rem] transform rotate-180"
                     width={24}
                     height={28}
                     src="/images/Polygon-4.svg"
                     alt=""
                   />
-                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] ml-[-0.2rem] relative">
+                </div>
+
+                {/* Contact */}
+                <div className="cursor-pointer [border:none] p-0 bg-[transparent] flex items-center pointer-events-auto hover:scale-105 -translate-y-[5rem] transition-transform">
+                  <Image
+                    className="h-[1.75rem] w-[1.5rem] relative rounded-sm object-contain z-[1] mr-[-0.25rem]"
+                    width={24}
+                    height={28}
+                    src="/images/Polygon-4.svg"
+                    alt=""
+                  />
+                  <div className="rounded-radius-md bg-color-gray-100 overflow-hidden flex items-center justify-center py-[0.9rem] px-[1.4rem] z-[2] relative">
                     <b className="relative text-[1.18rem] leading-[120%] font-[Pretendard] text-color-gray-600 whitespace-nowrap">
                       Contact 바로가기
                     </b>
@@ -136,7 +139,6 @@ const HeroSection = ({ className = "" }) => {
             </div>
           </section>
           
-          {/* [수정] object-contain으로 변경하여 절대 잘리지 않게 방어하고 크기 미세 확대 */}
           {/* 오른쪽 장식 이미지 */}
           <div className="h-[37rem] w-[10rem] relative shrink-0 mq1225:hidden">
             <Image
@@ -151,7 +153,7 @@ const HeroSection = ({ className = "" }) => {
         </div>
       </div>
 
-      {/* 하단 영역 묶음 (요청대로 크기 및 수치 변함없이 그대로 유지) */}
+      {/* 하단 영역 묶음 */}
       <div className="w-full flex flex-col items-center gap-[1.5rem] shrink-0 mt-auto">
         
         <div className="w-[2.625rem] h-[2.625rem] flex items-center justify-center">
