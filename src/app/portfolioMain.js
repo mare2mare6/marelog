@@ -73,36 +73,58 @@ const PortfolioMain = () => {
                         width={387}
                         height={254}
                         alt=""
-                        src="/Group-30@2x.png"
+                        src="/images/hellodog.svg"
                       />
+                      
+                      {/* 스킬 아이콘 가로 정렬 영역 */}
                       <div className="self-stretch flex items-center justify-between gap-[1.05rem] mq750:flex-wrap">
+                        
+                        {/* 1. Figma 아이콘 */}
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-[#000] overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.519rem] w-full relative" loading="lazy" width={27} height={40} src="/Group-31.svg" alt="" />
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={40} height={40} src="/images/figma.svg" alt="Figma" />
                         </div>
+
+                        {/* 2. VS Code 아이콘 */}
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 border-color-gray-400 border-solid border-[1px] box-border overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.5'rem] w-full relative object-cover" loading="lazy" width={40} height={40} src="/vscode-1@2x.png" alt="" />
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={40} height={40} src="/images/vscode.svg" alt="VS Code" />
                         </div>
-                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/Tool-Icon-Items@2x.png" alt="" />
-                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/Tool-Icon-Items@2x.png" alt="" />
-                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/Tool-Icon-Items@2x.png" alt="" />
+
+                        {/* 3. 포토샵 아이콘 - 남색(Photoshop 브랜드 컬러) 배경 */}
+                        <div className="h-[4rem] w-[4rem] rounded-radius-md bg-[#001e36] overflow-hidden shrink-0 flex items-center justify-center">
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={64} height={64} src="/images/ps.svg" alt="Photoshop" />
+                        </div>
+
+                        {/* 4. 일러스트레이터 아이콘 - 검정(Illustrator 브랜드 컬러) 배경 */}
+                        <div className="h-[4rem] w-[4rem] rounded-radius-md bg-[#000] overflow-hidden shrink-0 flex items-center justify-center">
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={64} height={64} src="/images/ai.svg" alt="Illustrator" />
+                        </div>
+
+                        {/* 5. 노션 아이콘 - VS Code처럼 얇은 테두리 추가 */}
+                        <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 border-color-gray-400 border-solid border-[1px] box-border overflow-hidden shrink-0 flex items-center justify-center">
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={64} height={64} src="/images/notion.svg" alt="Notion" />
+                        </div>
+
                       </div>
                     </div>
+                    
                     <div className="flex-1 flex flex-col items-start gap-[1.5rem] max-w-full">
                       <div className="self-stretch flex items-center justify-between gap-[1.25rem] max-w-full mq750:flex-wrap">
                         <h1 className="m-0 relative text-[length:inherit] leading-[120%] font-semibold font-[inherit] inline-block max-w-full mq450:text-[2.375rem] mq750:text-[3.188rem]">
                           che ha-eun
                         </h1>
-                        {/* [수정 완료] 하이드레이션 에러 방지를 위해 중복 인터랙션 구조 유발을 하는 role="button" 제거 */}
                         <div className="py-[1.25rem] px-[0rem] bg-[transparent] flex items-center gap-[0.25rem]">
                           <div className="relative text-[1.125rem] leading-[150%] font-[Pretendard] text-color-gray-500 text-left">
                             이력서 보기
                           </div>
-                          <Arrow variant="right" vector="/Vector1.svg" showArrow arrowHeight="1.5rem" arrowWidth="1.5rem" />
+                          <Arrow variant="right" vector="/images/arrow-right.svg" showArrow arrowHeight="1.5rem" arrowWidth="1.5rem" />
                         </div>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[0.75rem] text-[1.25rem]">
+                        {/* <br/>가 문자 그대로 노출되던 버그 수정: 실제 <br /> 태그로 교체 */}
                         <b className="self-stretch relative leading-[120%] mq450:text-[1rem]">
-                          <span>{`프론트엔드 이해도를 바탕으로 개발자와 소통하며,기획부터 일러스트까지.<br/>실전에 바로 투입 가능한 `}</span>
+                          <span>프론트엔드 이해도를 바탕으로 개발자와 소통하며,기획부터 일러스트까지.</span>
+                          <br />
+                          <span>{`실전에 바로 투입 가능한 `}</span>
                           <span className="text-[#498adf]">프로덕트 디자이너 최하은</span>
                           <span>입니다.</span>
                         </b>
@@ -134,7 +156,8 @@ const PortfolioMain = () => {
                   <div className="h-[0.063rem] flex-1 relative border-color-gray-400 border-solid border-t-[1px] box-border min-w-[42.25rem] mq1050:min-w-full" />
                 </div>
                 <div className="self-stretch flex flex-col items-center justify-center py-[0rem] px-[5rem] gap-[3.5rem] mq750:gap-[1.75rem] mq1225:p-[2.5rem]">
-                  <div className="self-stretch grid grid-cols-[repeat(auto-fit,_minmax(342px,_1fr))] [align-content:start] [column-gap:24px] [row-gap:56px]">
+                  {/* 그리드를 auto-fit → 고정 2열로 수정: 한 줄로 늘어서던 문제 해결 */}
+                  <div className="self-stretch grid grid-cols-2 [align-content:start] [column-gap:24px] [row-gap:56px] mq750:grid-cols-1">
                     
                     {/* Project 카드 1 */}
                     <section className="flex flex-col items-start gap-[1.5rem] text-left text-[3rem] text-[#d19e34] font-[Pretendard]">
@@ -146,7 +169,7 @@ const PortfolioMain = () => {
                         <b className="self-stretch relative text-[1.25rem] leading-[120%] text-[#000] mq450:text-[1rem]">털어놓으면 일기가 되고, 쌓이면 내 마음이 보이는 AI 감정 기록 서비스</b>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[1rem] text-[1rem] text-[#eebc52]">
-                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" loading="lazy" width={512} height={287} src="/Details-Padding@2x.png" alt="" />
+                        <Image className="w-full h-auto self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden object-cover" loading="lazy" width={512} height={287} src="/images/hearcover.png" alt="" />
                         <div className="self-stretch flex items-center gap-[0.5rem] mq750:flex-wrap">
                           <div className="flex items-center gap-[0.25rem]">
                             <div className="relative leading-[150%] font-semibold">Design</div>
@@ -173,7 +196,7 @@ const PortfolioMain = () => {
                         <b className="self-stretch relative text-[1.25rem] leading-[120%] text-[#000] mq450:text-[1rem]">털어놓으면 일기가 되고, 쌓이면 내 마음이 보이는 AI 감정 기록 서비스</b>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[1rem] text-[1rem] text-[#eebc52]">
-                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" width={512} height={287} src="/Frame-1430105842@2x.png" alt="" />
+                        <Image className="w-full h-auto self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden object-cover" loading="lazy" width={512} height={287} src="/images/hearcover.png" alt="" />
                         <div className="self-stretch flex items-center gap-[0.5rem] mq750:flex-wrap">
                           <div className="flex items-center gap-[0.25rem]">
                             <div className="relative leading-[150%] font-semibold">Design</div>
@@ -200,7 +223,7 @@ const PortfolioMain = () => {
                         <b className="self-stretch relative text-[1.25rem] leading-[120%] text-[#000] mq450:text-[1rem]">털어놓으면 일기가 되고, 쌓이면 내 마음이 보이는 AI 감정 기록 서비스</b>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[1rem] text-[1rem] text-[#eebc52]">
-                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" width={512} height={287} src="/Frame-1430105842@2x.png" alt="" />
+                        <Image className="w-full h-auto self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden object-cover" loading="lazy" width={512} height={287} src="/images/hearcover.png" alt="" />
                         <div className="self-stretch flex items-center gap-[0.5rem] mq750:flex-wrap">
                           <div className="flex items-center gap-[0.25rem]">
                             <div className="relative leading-[150%] font-semibold">Design</div>
@@ -227,7 +250,7 @@ const PortfolioMain = () => {
                         <b className="self-stretch relative text-[1.25rem] leading-[120%] text-[#000] mq450:text-[1rem]">털어놓으면 일기가 되고, 쌓이면 내 마음이 보이는 AI 감정 기록 서비스</b>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[1rem] text-[1rem] text-[#eebc52]">
-                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" width={512} height={287} src="/Frame-1430105842@2x.png" alt="" />
+                        <Image className="w-full h-auto self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden object-cover" loading="lazy" width={512} height={287} src="/images/hearcover.png" alt="" />
                         <div className="self-stretch flex items-center gap-[0.5rem] mq750:flex-wrap">
                           <div className="flex items-center gap-[0.25rem]">
                             <div className="relative leading-[150%] font-semibold">Design</div>
