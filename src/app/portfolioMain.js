@@ -165,7 +165,7 @@ const PortfolioMain = () => {
                         <b className="self-stretch relative text-[1.25rem] leading-[120%] text-[#000] mq450:text-[1rem]">털어놓으면 일기가 되고, 쌓이면 내 마음이 보이는 AI 감정 기록 서비스</b>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[1rem] text-[1rem] text-[#eebc52]">
-                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" loading="lazy" width={512} height={287} src="/Details-Padding@2x.png" alt="" />
+                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" loading="lazy" width={512} height={287} src="/images/hearcover.png" alt="" />
                         <div className="self-stretch flex items-center gap-[0.5rem] mq750:flex-wrap">
                           <div className="flex items-center gap-[0.25rem]">
                             <div className="relative leading-[150%] font-semibold">Design</div>
@@ -192,7 +192,7 @@ const PortfolioMain = () => {
                         <b className="self-stretch relative text-[1.25rem] leading-[120%] text-[#000] mq450:text-[1rem]">털어놓으면 일기가 되고, 쌓이면 내 마음이 보이는 AI 감정 기록 서비스</b>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[1rem] text-[1rem] text-[#eebc52]">
-                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" width={512} height={287} src="/Frame-1430105842@2x.png" alt="" />
+                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" width={512} height={287} src="/images/hearcover.png" alt="" />
                         <div className="self-stretch flex items-center gap-[0.5rem] mq750:flex-wrap">
                           <div className="flex items-center gap-[0.25rem]">
                             <div className="relative leading-[150%] font-semibold">Design</div>
@@ -219,7 +219,7 @@ const PortfolioMain = () => {
                         <b className="self-stretch relative text-[1.25rem] leading-[120%] text-[#000] mq450:text-[1rem]">털어놓으면 일기가 되고, 쌓이면 내 마음이 보이는 AI 감정 기록 서비스</b>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[1rem] text-[1rem] text-[#eebc52]">
-                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" width={512} height={287} src="/Frame-1430105842@2x.png" alt="" />
+                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" width={512} height={287} src="/images/hearcover.png" alt="" />
                         <div className="self-stretch flex items-center gap-[0.5rem] mq750:flex-wrap">
                           <div className="flex items-center gap-[0.25rem]">
                             <div className="relative leading-[150%] font-semibold">Design</div>
@@ -246,7 +246,7 @@ const PortfolioMain = () => {
                         <b className="self-stretch relative text-[1.25rem] leading-[120%] text-[#000] mq450:text-[1rem]">털어놓으면 일기가 되고, 쌓이면 내 마음이 보이는 AI 감정 기록 서비스</b>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[1rem] text-[1rem] text-[#eebc52]">
-                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" width={512} height={287} src="/Frame-1430105842@2x.png" alt="" />
+                        <Image className="self-stretch shadow-[0px_0px_5px_rgba(0,_0,_0,_0.15)] max-w-full overflow-hidden max-h-full object-cover" width={512} height={287} src="/images/hearcover.png" alt="" />
                         <div className="self-stretch flex items-center gap-[0.5rem] mq750:flex-wrap">
                           <div className="flex items-center gap-[0.25rem]">
                             <div className="relative leading-[150%] font-semibold">Design</div>
