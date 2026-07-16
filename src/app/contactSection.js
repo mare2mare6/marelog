@@ -1,12 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Chip from "./chip";
 import CommonButton from "./commonButton"; // 명칭 통일을 위해 변경
 import PropTypes from "prop-types";
 
+// lottie-react는 브라우저 전용(document 필요)이라 SSR을 꺼야 빌드 에러가 안 남
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
+
 const ContactSection = ({ className = "" }) => {
+  const [animationData, setAnimationData] = useState(null);
+  const [animationError, setAnimationError] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetch("/lottieData.json")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`lottieData.json fetch 실패: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (!isMounted) return;
+
+        // assets의 이미지 경로를 public/images 절대경로로 보정
+        // 원본: { "u": "images/", "p": "img_0.png" } -> "images/img_0.png" (상대경로, 깨질 수 있음)
+        // 보정: { "u": "/images/", "p": "img_0.png" } -> "/images/img_0.png" (public 루트 기준 절대경로)
+        const fixedAssets = data.assets.map((asset) => {
+          if (asset.p && !asset.p.startsWith("http") && !asset.p.startsWith("data:")) {
+            return { ...asset, u: "/images/" };
+          }
+          return asset;
+        });
+
+        setAnimationData({ ...data, assets: fixedAssets });
+      })
+      .catch((err) => {
+        console.error("Lottie 애니메이션 로드 실패, 정적 이미지로 대체합니다:", err);
+        if (isMounted) setAnimationError(true);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const [chipItems] = useState([
     { variant: "default", prop: "uxui", chipBorder: "none", chipHeight: "" },
     { variant: "default", prop: "일러스트레이터", chipBorder: "none", chipHeight: "" },
@@ -29,15 +71,29 @@ const ContactSection = ({ className = "" }) => {
       className={`w-[74.069rem] flex flex-col items-end py-[0rem] pl-[0rem] pr-[1.25rem] box-border gap-[1.25rem] max-w-full shrink-0 ${className}`}
     >
       <div className="w-[74.256rem] max-w-[102%] flex items-start gap-[0.312rem] z-[2] shrink-0 mq1050:flex-wrap">
-        <Image
-          className="w-[27.256rem] relative max-h-full object-cover max-w-full mq1050:flex-1"
-          loading="lazy"
-          width={436.1}
-          height={518}
-          sizes="100vw"
-          alt=""
-          src="/image-5@2x.png"
-        />
+        {/* 기존 정적 이미지를 Lottie 애니메이션으로 교체 */}
+        <div className="w-[27.256rem] h-[32.375rem] relative max-w-full mq1050:flex-1 overflow-hidden">
+          {animationData && !animationError ? (
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              autoplay={true}
+              style={{ width: "100%", height: "100%" }}
+            />
+          ) : (
+            // 로딩 중이거나 에러 시 폴백 (레이아웃 깨짐 방지)
+            <Image
+              className="w-full h-full relative object-cover max-w-full"
+              loading="lazy"
+              width={436.1}
+              height={518}
+              sizes="100vw"
+              alt=""
+              src="/image-5@2x.png"
+            />
+          )}
+        </div>
+
         <section className="h-[27.188rem] flex-1 flex flex-col items-center justify-center gap-[2rem] min-w-[30.375rem] text-left text-[3rem] text-color-primary-400 font-['BR_B'] mq750:h-auto mq750:gap-[1rem] mq750:min-w-full">
           <div className="self-stretch flex items-center [row-gap:20px] mq750:flex-wrap">
             <Image
