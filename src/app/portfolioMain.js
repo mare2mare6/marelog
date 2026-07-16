@@ -73,18 +73,18 @@ const PortfolioMain = () => {
                         width={387}
                         height={254}
                         alt=""
-                        src="/Group-30@2x.png"
+                        src="/images/hellodog.svg"
                       />
                       <div className="self-stretch flex items-center justify-between gap-[1.05rem] mq750:flex-wrap">
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-[#000] overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.519rem] w-full relative" loading="lazy" width={27} height={40} src="/Group-31.svg" alt="" />
+                          <Image className="h-[2.519rem] w-full relative" loading="lazy" width={27} height={40} src="/images/figma.png" alt="" />
                         </div>
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 border-color-gray-400 border-solid border-[1px] box-border overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.5'rem] w-full relative object-cover" loading="lazy" width={40} height={40} src="/vscode-1@2x.png" alt="" />
+                          <Image className="h-[2.5'rem] w-full relative object-cover" loading="lazy" width={40} height={40} src="/images/vscode.png" alt="" />
                         </div>
-                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/Tool-Icon-Items@2x.png" alt="" />
-                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/Tool-Icon-Items@2x.png" alt="" />
-                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/Tool-Icon-Items@2x.png" alt="" />
+                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/images/tool-icon-items@2x.png" alt="" />
+                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/images/tool-icon-items@2x.png" alt="" />
+                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/images/tool-icon-items@2x.png" alt="" />
                       </div>
                     </div>
                     <div className="flex-1 flex flex-col items-start gap-[1.5rem] max-w-full">
@@ -97,7 +97,7 @@ const PortfolioMain = () => {
                           <div className="relative text-[1.125rem] leading-[150%] font-[Pretendard] text-color-gray-500 text-left">
                             이력서 보기
                           </div>
-                          <Arrow variant="right" vector="/Vector1.svg" showArrow arrowHeight="1.5rem" arrowWidth="1.5rem" />
+                          <Arrow variant="right" vector="/images/arrow-right.svg" showArrow arrowHeight="1.5rem" arrowWidth="1.5rem" />
                         </div>
                       </div>
                       <div className="self-stretch flex flex-col items-start gap-[0.75rem] text-[1.25rem]">
