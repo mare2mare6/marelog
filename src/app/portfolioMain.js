@@ -75,24 +75,43 @@ const PortfolioMain = () => {
                         alt=""
                         src="/images/hellodog.svg"
                       />
+                      
+                      {/* 스킬 아이콘 가로 정렬 영역 - 스타일 및 오타 수정 완료 */}
                       <div className="self-stretch flex items-center justify-between gap-[1.05rem] mq750:flex-wrap">
+                        
+                        {/* 1. Figma 아이콘 */}
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-[#000] overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.519rem] w-full relative" loading="lazy" width={27} height={40} src="/images/figma.png" alt="" />
+                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={27} height={40} src="/images/figma.svg" alt="Figma" />
                         </div>
+
+                        {/* 2. VS Code 아이콘 */}
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 border-color-gray-400 border-solid border-[1px] box-border overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.5'rem] w-full relative object-cover" loading="lazy" width={40} height={40} src="/images/vscode.png" alt="" />
+                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={40} height={40} src="/images/vscode.svg" alt="VS Code" />
                         </div>
-                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/images/tool-icon-items@2x.png" alt="" />
-                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/images/tool-icon-items@2x.png" alt="" />
-                        <Image className="w-[4rem] rounded-radius-md max-h-full object-cover" loading="lazy" width={64} height={64} src="/images/tool-icon-items@2x.png" alt="" />
+
+                        {/* 3. 포토샵 아이콘 1 */}
+                        <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 overflow-hidden shrink-0 flex items-center justify-center">
+                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={64} height={64} src="/images/ps.svg" alt="Tool Icon" />
+                        </div>
+
+                        {/* 4. 일러스트레이터 아이콘 2 */}
+                        <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 overflow-hidden shrink-0 flex items-center justify-center">
+                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={64} height={64} src="/images/ai.svg" alt="Tool Icon" />
+                        </div>
+
+                        {/* 5.노션 아이콘 3 */}
+                        <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 overflow-hidden shrink-0 flex items-center justify-center">
+                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={64} height={64} src="/images/notion.svg" alt="Tool Icon" />
+                        </div>
+
                       </div>
                     </div>
+                    
                     <div className="flex-1 flex flex-col items-start gap-[1.5rem] max-w-full">
                       <div className="self-stretch flex items-center justify-between gap-[1.25rem] max-w-full mq750:flex-wrap">
                         <h1 className="m-0 relative text-[length:inherit] leading-[120%] font-semibold font-[inherit] inline-block max-w-full mq450:text-[2.375rem] mq750:text-[3.188rem]">
                           che ha-eun
                         </h1>
-                        {/* [수정 완료] 하이드레이션 에러 방지를 위해 중복 인터랙션 구조 유발을 하는 role="button" 제거 */}
                         <div className="py-[1.25rem] px-[0rem] bg-[transparent] flex items-center gap-[0.25rem]">
                           <div className="relative text-[1.125rem] leading-[150%] font-[Pretendard] text-color-gray-500 text-left">
                             이력서 보기
