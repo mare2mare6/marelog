@@ -76,32 +76,32 @@ const PortfolioMain = () => {
                         src="/images/hellodog.svg"
                       />
                       
-                      {/* 스킬 아이콘 가로 정렬 영역 - 스타일 및 오타 수정 완료 */}
+                      {/* 스킬 아이콘 가로 정렬 영역 - 이미지가 상자를 꽉 채우도록 반영 완료 */}
                       <div className="self-stretch flex items-center justify-between gap-[1.05rem] mq750:flex-wrap">
                         
                         {/* 1. Figma 아이콘 */}
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-[#000] overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={27} height={40} src="/images/figma.svg" alt="Figma" />
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={40} height={40} src="/images/figma.svg" alt="Figma" />
                         </div>
 
                         {/* 2. VS Code 아이콘 */}
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 border-color-gray-400 border-solid border-[1px] box-border overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={40} height={40} src="/images/vscode.svg" alt="VS Code" />
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={40} height={40} src="/images/vscode.svg" alt="VS Code" />
                         </div>
 
-                        {/* 3. 포토샵 아이콘 1 */}
+                        {/* 3. 포토샵 아이콘 */}
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={64} height={64} src="/images/ps.svg" alt="Tool Icon" />
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={64} height={64} src="/images/ps.svg" alt="Photoshop" />
                         </div>
 
-                        {/* 4. 일러스트레이터 아이콘 2 */}
+                        {/* 4. 일러스트레이터 아이콘 */}
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={64} height={64} src="/images/ai.svg" alt="Tool Icon" />
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={64} height={64} src="/images/ai.svg" alt="Illustrator" />
                         </div>
 
-                        {/* 5.노션 아이콘 3 */}
+                        {/* 5. 노션 아이콘 */}
                         <div className="h-[4rem] w-[4rem] rounded-radius-md bg-color-gray-0 overflow-hidden shrink-0 flex items-center justify-center">
-                          <Image className="h-[2.5rem] w-auto relative object-contain" loading="lazy" width={64} height={64} src="/images/notion.svg" alt="Tool Icon" />
+                          <Image className="w-full h-full relative object-cover" loading="lazy" width={64} height={64} src="/images/notion.svg" alt="Notion" />
                         </div>
 
                       </div>
