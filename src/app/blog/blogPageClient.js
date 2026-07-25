@@ -26,24 +26,33 @@ export default function BlogPageClient({ initialPosts, initialHasMore, sidebarDa
   }, [search]);
 
   const fetchPosts = useCallback(async (pageNum, replace, currentFilters, currentSearch) => {
-    setLoading(true);
-    const params = new URLSearchParams({ page: String(pageNum), limit: String(LIMIT) });
-    if (currentFilters.category) params.set("category", currentFilters.category);
-    if (currentFilters.tag) params.set("tag", currentFilters.tag);
-    if (currentSearch) params.set("search", currentSearch);
+  setLoading(true);
+  const params = new URLSearchParams({ page: String(pageNum), limit: String(LIMIT) });
+  if (currentFilters.category) params.set("category", currentFilters.category);
+  if (currentFilters.tag) params.set("tag", currentFilters.tag);
+  if (currentSearch) params.set("search", currentSearch);
 
-    try {
-      const res = await fetch(`/api/posts?${params.toString()}`);
-      const data = await res.json();
-      setPosts((prev) => (replace ? data.posts : [...prev, ...data.posts]));
-      setHasMore(data.hasMore);
-      setPage(pageNum);
-    } catch (error) {
-      console.error("Failed to fetch posts:", error);
-    } finally {
-      setLoading(false);
+  try {
+    const res = await fetch(`/api/posts?${params.toString()}`);
+    
+    // 💡 응답이 성공(200 OK)이 아닌 경우 예외 처리
+    if (!res.ok) {
+      throw new Error(`Server error: ${res.status}`);
     }
-  }, []);
+
+    const data = await res.json();
+    setPosts((prev) => (replace ? data.posts : [...prev, ...data.posts]));
+    setHasMore(data.hasMore);
+    setPage(pageNum);
+  } catch (error) {
+    console.error("Failed to fetch posts:", error);
+    // 에러 발생 시 상태 초기화 또는 안내
+    if (replace) setPosts([]);
+    setHasMore(false);
+  } finally {
+    setLoading(false);
+  }
+}, []);
 
   // 필터나 검색어가 바뀔 때 첫 페이지부터 새로 가져옴
   useEffect(() => {
