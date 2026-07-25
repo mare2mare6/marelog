@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import PropTypes from "prop-types";
 
 const Header = ({ className = "" }) => {
@@ -24,9 +25,12 @@ const Header = ({ className = "" }) => {
         <div className="flex items-center justify-center py-[0.5rem] px-[1.5rem]">
           <b className="relative leading-[120%] cursor-pointer hover:text-black">Projects</b>
         </div>
-        <div className="flex items-center justify-center py-[0.5rem] px-[1.5rem]">
+        <Link
+          href="/blog"
+          className="flex items-center justify-center py-[0.5rem] px-[1.5rem]"
+        >
           <b className="relative leading-[120%] cursor-pointer hover:text-black">Blog</b>
-        </div>
+        </Link>
         <div className="flex items-center justify-center py-[0.5rem] px-[1.5rem]">
           <b className="relative leading-[120%] cursor-pointer hover:text-black">Contact</b>
         </div>
