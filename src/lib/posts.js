@@ -1,12 +1,10 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { marked } from "marked";
 
 const POSTS_DIR = path.join(process.cwd(), "src/content/posts");
 
-/**
- * posts 폴더의 모든 .md/.mdx 파일을 읽어 frontmatter를 파싱해서 배열로 반환
- */
 export function getAllPosts() {
   if (!fs.existsSync(POSTS_DIR)) return [];
 
@@ -19,36 +17,20 @@ export function getAllPosts() {
     const source = fs.readFileSync(filePath, "utf-8");
     const { data } = matter(source);
 
-    // tags가 단일 문자열로 들어오거나 없을 경우 안전하게 배열 변환
-    let formattedTags = [];
-    if (Array.isArray(data.tags)) {
-      formattedTags = data.tags;
-    } else if (typeof data.tags === "string") {
-      formattedTags = data.tags.split(",").map((t) => t.trim());
-    }
-
     return {
       slug: data.slug || filename.replace(/\.mdx?$/, ""),
       title: data.title || "제목 없음",
       description: data.description || "",
       thumbnail: data.thumbnail || null,
       category: data.category || "기타",
-      tags: formattedTags,
-      date: data.date ? new Date(data.date).toISOString() : null,
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      date: data.date || null,
     };
   });
 
-  // 날짜 기준 내림차순 정렬 (날짜가 없거나 유효하지 않은 경우 안전하게 처리)
-  return posts.sort((a, b) => {
-    const timeA = a.date ? new Date(a.date).getTime() : 0;
-    const timeB = b.date ? new Date(b.date).getTime() : 0;
-    return timeB - timeA;
-  });
+  return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
-/**
- * 사이드바용 데이터: 전체 태그 + 카테고리별 태그 목록
- */
 export function getSidebarData() {
   const posts = getAllPosts();
   const categoryMap = new Map();
@@ -56,7 +38,6 @@ export function getSidebarData() {
 
   posts.forEach((post) => {
     post.tags.forEach((tag) => allTagsSet.add(tag));
-
     if (!categoryMap.has(post.category)) {
       categoryMap.set(post.category, new Set());
     }
@@ -68,41 +49,18 @@ export function getSidebarData() {
     tags: Array.from(tagSet),
   }));
 
-  return {
-    all: Array.from(allTagsSet),
-    categories,
-  };
+  return { all: Array.from(allTagsSet), categories };
 }
 
-/**
- * 페이지네이션 + 필터링 (무한스크롤용)
- */
-export function getPaginatedPosts({
-  page = 1,
-  limit = 6,
-  category = null,
-  tag = null,
-  search = "",
-} = {}) { // = {} 기본값을 지정해서 인자 없이 호출 시 에러 방지
+export function getPaginatedPosts({ page = 1, limit = 6, category = null, tag = null, search = "" }) {
   let posts = getAllPosts();
 
-  // 카테고리 필터링
-  if (category) {
-    posts = posts.filter((p) => p.category === category);
-  }
-
-  // 태그 필터링
-  if (tag) {
-    posts = posts.filter((p) => p.tags.includes(tag));
-  }
-
-  // 검색어 필터링
+  if (category) posts = posts.filter((p) => p.category === category);
+  if (tag) posts = posts.filter((p) => p.tags.includes(tag));
   if (search) {
     const q = search.toLowerCase();
     posts = posts.filter(
-      (p) =>
-        p.title.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q)
+      (p) => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)
     );
   }
 
@@ -113,5 +71,47 @@ export function getPaginatedPosts({
     posts: posts.slice(start, end),
     hasMore: end < posts.length,
     total: posts.length,
+  };
+}
+
+// 상세 페이지용: slug로 게시글 1개 + 마크다운 본문을 HTML로 변환해서 반환
+export function getPostBySlug(slug) {
+  if (!fs.existsSync(POSTS_DIR)) return null;
+
+  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md") || f.endsWith(".mdx"));
+  const filename = files.find((f) => {
+    const filePath = path.join(POSTS_DIR, f);
+    const { data } = matter(fs.readFileSync(filePath, "utf-8"));
+    const fileSlug = data.slug || f.replace(/\.mdx?$/, "");
+    return fileSlug === slug;
+  });
+
+  if (!filename) return null;
+
+  const filePath = path.join(POSTS_DIR, filename);
+  const source = fs.readFileSync(filePath, "utf-8");
+  const { data, content } = matter(source);
+
+  return {
+    slug: data.slug || filename.replace(/\.mdx?$/, ""),
+    title: data.title || "제목 없음",
+    description: data.description || "",
+    thumbnail: data.thumbnail || null,
+    category: data.category || "기타",
+    tags: Array.isArray(data.tags) ? data.tags : [],
+    date: data.date || null,
+    contentHtml: marked.parse(content),
+  };
+}
+
+// 목록 정렬 순서(날짜 내림차순) 기준 이전글/다음글
+export function getAdjacentPosts(slug) {
+  const posts = getAllPosts();
+  const idx = posts.findIndex((p) => p.slug === slug);
+  if (idx === -1) return { prev: null, next: null };
+
+  return {
+    prev: idx > 0 ? posts[idx - 1] : null,
+    next: idx < posts.length - 1 ? posts[idx + 1] : null,
   };
 }
