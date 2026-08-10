@@ -11,6 +11,10 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
+html {
+  overflow-y: scroll;
+}
+
 /* 4. 마지막으로 실제 스타일 규칙들을 정의합니다 */
 body {
   @apply leading-[normal] m-0;

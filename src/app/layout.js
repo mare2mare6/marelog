@@ -19,9 +19,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+  lang="en"
+  className={`${geistSans.variable} ${geistMono.variable} h-full antialiased [scrollbar-gutter:stable]`}
+>
       {/* 폰트 변수를 body의 className 뒤에 띄어쓰기로 안전하게 결합했습니다. */}
       <body 
         className={`min-h-full flex flex-col ${geistSans.variable} ${geistMono.variable}`} 
